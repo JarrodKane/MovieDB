@@ -1,18 +1,35 @@
 import React from "react";
 
-import SearchContainer from "../components/SearchContainer";
+import MovieRow from "../components/MovieRow";
 import SearchBar from "../components/SearchBar";
 
 class Search extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { movies: [], isSignedIn: false };
+    this.state = {
+      movies: [
+        { id: "213", title: "Hacker", add: false },
+        { id: "243", title: "dingo", add: false }
+      ],
+      isSignedIn: false
+    };
   }
+
+  addOrRemove(id) {}
+
   render() {
+    const rows = this.state.movies.map(row => (
+      <MovieRow
+        id={row.id}
+        key={row.id}
+        title={row.title}
+        addOrRemove={row.add}
+      />
+    ));
     return (
       <div>
         <SearchBar />
-        <SearchContainer />
+        <div>{rows}</div>
       </div>
     );
   }
