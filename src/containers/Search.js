@@ -15,11 +15,15 @@ class Search extends React.Component {
         { id: "243", title: "dingo", add: false }
       ],
       isSignedIn: false,
-      login: { un: "Harrod", pw: "15Mackdog$" },
+      un: "Harrod",
+      pw: "15Mackdog$",
       login_session: {}
     };
 
-    this.clickAuthenticate = this.clickAuthenticate.bind(this);
+    //TODO: REMOVE THE UN AND PW when not testing
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleAuthenticate = this.handleAuthenticate.bind(this);
     this.getAccDet = this.getAccDet.bind(this);
   }
 
@@ -28,10 +32,19 @@ class Search extends React.Component {
     api: "9ccbc3e0393b7578cbf2eb8ae9f260c0"
   };
 
+  // This gets called when ever the input boxes are used
+  // This sets the un if it was an username change or a pw if it was a password change with each change
+  handleChange(evt) {
+    this.setState({
+      [evt.target.name]: evt.target.value
+    });
+  }
+
   // This function will go create a request_token, which then gets stored in state.
-  async clickAuthenticate() {
+  async handleAuthenticate(evt) {
+    evt.preventDefault();
     const api = this.props.api;
-    let { un, pw } = this.state.login;
+    let { un, pw } = this.state;
     try {
       let userAuth = await createRequestToken(api, un, pw);
       this.setState({ login_session: userAuth });
@@ -102,7 +115,31 @@ class Search extends React.Component {
     ));
     return (
       <div>
-        <button onClick={this.clickAuthenticate}>Click</button>
+        <form className="Username" onSubmit={this.handleAuthenticate}>
+          <div>
+            <label htmlFor="un">User name</label>
+            <input
+              type="text"
+              placeholder="Username"
+              id="un"
+              name="un"
+              value={this.state.un}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="pw">Password</label>
+            <input
+              type="password"
+              id="pw"
+              name="pw"
+              value={this.state.pw}
+              onChange={this.handleChange}
+            />
+          </div>
+
+          <button>Click</button>
+        </form>
         <SearchBar />
         <div>{rows}</div>
       </div>
