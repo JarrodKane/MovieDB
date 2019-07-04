@@ -4,6 +4,8 @@ import axois from "../api/TheMovieDB";
 import MovieRow from "../components/MovieRow";
 import SearchBar from "../components/SearchBar";
 
+import { createRequestToken } from "../api/OAuth";
+
 class Search extends React.Component {
   constructor(props) {
     super(props);
@@ -13,12 +15,12 @@ class Search extends React.Component {
         { id: "243", title: "dingo", add: false }
       ],
       isSignedIn: false,
-      rqtoken: {},
-      login: { un: "Harrod", pw: "15Mackdog$" }
+      login: { un: "Harrod", pw: "15Mackdog$" },
+      login_session: {}
     };
 
-    this.createRequestToken = this.createRequestToken.bind(this);
-    this.authReq = this.authReq.bind(this);
+    this.clickAuthenticate = this.clickAuthenticate.bind(this);
+    this.getAccDet = this.getAccDet.bind(this);
   }
 
   // Static prop set for API since it will never be changed by any event in the application
@@ -27,74 +29,49 @@ class Search extends React.Component {
   };
 
   // This function will go create a request_token, which then gets stored in state.
-  async createRequestToken() {
+  async clickAuthenticate() {
     const api = this.props.api;
+    let { un, pw } = this.state.login;
     try {
-      let rtData = {};
+      let userAuth = await createRequestToken(api, un, pw);
+      this.setState({ login_session: userAuth });
+    } catch (error) {}
+  }
 
-      let res = await axois.get(`authentication/token/new?api_key=${api}`);
-      rtData = res.data;
-      this.setState({ rqtoken: rtData });
-      // console.log(this.state.rqtoken);
-      this.authReq();
+  //Getting account details so that we can use the ID of the account to grab the wathclist and other calls
+  async getAccDet() {
+    const api = this.props.api;
+    const session_id = this.state.session_id;
+    let userDeets = [];
+
+    try {
+      let res = await axois.get(
+        `/account?api_key=${api}&session_id=${session_id}`
+      );
+      userDeets = res.data;
+      this.setState({ userDeets });
+      this.getWatchList();
     } catch (e) {
       alert(e);
       this.setState({ loading: false });
     }
   }
 
-  // This function will take the created request_token and authenticate it against a user
-  async authReq() {
+  // Only returns 10 per page
+  async getWatchList(sort = "created_at.asc", page = 1) {
+    const userID = this.state.userDeets.id;
     const api = this.props.api;
-    const { un, pw } = this.state.login;
-    const rt = this.state.rqtoken.request_token;
-    //  console.log(rt);
-
-    var data = {
-      username: un,
-      password: pw,
-      request_token: rt
-    };
+    const session_id = this.state.session_id;
+    const language = "en-US";
+    let sort_by = sort;
+    let pageNum = page;
 
     try {
-      let authData = {};
-
-      let res = await axois.post(
-        `authentication/token/validate_with_login?api_key=${api}`,
-        data
+      let res = await axois.get(
+        `account/${userID}/watchlist/movies?api_key=${api}&language=${language}&session_id=${session_id}&sort_by=${sort_by}&page=${pageNum}`
       );
-      authData = res.data;
-      console.log("Author data ");
-      console.log(authData);
-      this.createSessionId();
-    } catch (e) {
-      alert(e);
-      this.setState({ loading: false });
-    }
-  }
-
-  //Taking the autenticated request_token we can now get a session ID for the user that has that token
-  async createSessionId() {
-    const api = this.props.api;
-    const rt = this.state.rqtoken.request_token;
-    console.log("request_token to be autneticated for sessionID");
-    console.log(rt);
-    var data = {
-      request_token: rt
-    };
-    try {
-      //let sessionData = {};
-
-      let res = await axois.post(
-        `authentication/session/new?api_key=${api}`,
-        data
-      );
-      console.log("SessionDATA");
+      console.log("Watch List");
       console.log(res.data);
-      //sessionData = this.state.login;
-
-      // this.setState({ login: sessionData });
-      // console.log(this.state.rqtoken);
     } catch (e) {
       alert(e);
       this.setState({ loading: false });
@@ -110,11 +87,10 @@ class Search extends React.Component {
     console.log(this.state.login);
   };
 
-  deleteSession() {}
-
   addOrRemove(id) {}
   */
 
+  //TODO: Need a form to fill in for login if not logged in
   render() {
     const rows = this.state.movies.map(row => (
       <MovieRow
@@ -126,9 +102,7 @@ class Search extends React.Component {
     ));
     return (
       <div>
-        <button onClick={this.testUser}>test user</button>
-        <button onClick={this.createRequestToken}>Click</button>
-        <button onClick={this.authReq}>Submit Login</button>
+        <button onClick={this.clickAuthenticate}>Click</button>
         <SearchBar />
         <div>{rows}</div>
       </div>
