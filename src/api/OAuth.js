@@ -1,7 +1,5 @@
 import axois from "../api/TheMovieDB";
 
-//const api = "9ccbc3e0393b7578cbf2eb8ae9f260c0";
-
 // This function will go create a request_token, after that it sets the request token into the data object
 // This then does another call to the api to validate a login, so takes in the dataobject
 // after this it then takes the validated key to user and creates a new session
@@ -32,14 +30,27 @@ export async function createRequestToken(api, un, pw) {
 
     data["session_id"] = res.data.session_id;
     rtData = data;
-    console.log(rtData);
     return rtData;
   } catch (e) {
     alert(e);
   }
 }
 
-//TODO: Delete session
+// Getting the accoutn details for the user account
+// Needed for id of the user to grab watchlists etc
+export async function getAccDet(api, session_id) {
+  try {
+    let rtData = {};
+
+    let res = await axois.get(
+      `/account?api_key=${api}&session_id=${session_id}`
+    );
+    rtData = res.data;
+    return rtData;
+  } catch (e) {
+    alert(e);
+  }
+}
 
 /*
 //Getting account details so that we can use the ID of the account to grab the wathclist and other calls
@@ -61,3 +72,5 @@ async getAccDet() {
   }
 }
 */
+
+//TODO: Delete session

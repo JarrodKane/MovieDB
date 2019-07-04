@@ -1,10 +1,10 @@
 import React from "react";
-import axois from "../api/TheMovieDB";
 
 import MovieRow from "../components/MovieRow";
 import SearchBar from "../components/SearchBar";
 
-import { createRequestToken } from "../api/OAuth";
+import { createRequestToken, getAccDet } from "../api/OAuth";
+import { getWatchList } from "../api/UserFun";
 
 class Search extends React.Component {
   constructor(props) {
@@ -17,14 +17,16 @@ class Search extends React.Component {
       isSignedIn: false,
       un: "Harrod",
       pw: "15Mackdog$",
-      login_session: {}
+      login_session: {},
+      userDetails: {},
+      watchList: []
     };
-
     //TODO: REMOVE THE UN AND PW when not testing
 
     this.handleChange = this.handleChange.bind(this);
     this.handleAuthenticate = this.handleAuthenticate.bind(this);
-    this.getAccDet = this.getAccDet.bind(this);
+    // this.getAccDet = this.getAccDet.bind(this);
+    this.handleGetWatchlist = this.handleGetWatchlist.bind(this);
   }
 
   // Static prop set for API since it will never be changed by any event in the application
@@ -40,7 +42,10 @@ class Search extends React.Component {
     });
   }
 
+  // --- This is the main call tothe OAuth Function ---
   // This function will go create a request_token, which then gets stored in state.
+  // It will then call the getAccDet to get the details of the user account
+  // The user detailss are then returned and stored in the state
   async handleAuthenticate(evt) {
     evt.preventDefault();
     const api = this.props.api;
@@ -48,57 +53,35 @@ class Search extends React.Component {
     try {
       let userAuth = await createRequestToken(api, un, pw);
       this.setState({ login_session: userAuth });
+      let session_id = this.state.login_session.session_id;
+
+      let userDetails = await getAccDet(api, session_id);
+      this.setState({ userDetails: userDetails });
     } catch (error) {}
   }
 
-  //Getting account details so that we can use the ID of the account to grab the wathclist and other calls
-  async getAccDet() {
-    const api = this.props.api;
-    const session_id = this.state.session_id;
-    let userDeets = [];
-
-    try {
-      let res = await axois.get(
-        `/account?api_key=${api}&session_id=${session_id}`
-      );
-      userDeets = res.data;
-      this.setState({ userDeets });
-      this.getWatchList();
-    } catch (e) {
-      alert(e);
-      this.setState({ loading: false });
-    }
-  }
-
-  // Only returns 10 per page
-  async getWatchList(sort = "created_at.asc", page = 1) {
-    const userID = this.state.userDeets.id;
-    const api = this.props.api;
-    const session_id = this.state.session_id;
-    const language = "en-US";
-    let sort_by = sort;
-    let pageNum = page;
-
-    try {
-      let res = await axois.get(
-        `account/${userID}/watchlist/movies?api_key=${api}&language=${language}&session_id=${session_id}&sort_by=${sort_by}&page=${pageNum}`
-      );
-      console.log("Watch List");
-      console.log(res.data);
-    } catch (e) {
-      alert(e);
-      this.setState({ loading: false });
-    }
+  //Gets the watchlist for the authenticated user if not singed in asks for sign in
+  // Makes an object of props to hand in
+  //const { userID, sort, session_id, language, page, api } = props;
+  //TODO: Change sort and page so we can pass as props
+  async handleGetWatchlist() {
+    // let props = this.state.userDetails;
+    let details = this.state.userDetails;
+    let props = {
+      sort: "created_at.asc",
+      page: "1",
+      userDetails: { details },
+      api: this.props.api,
+      session_id: this.state.login_session.session_id
+    };
+    let watchList = await getWatchList(props);
+    this.setState({ watchList: watchList });
   }
 
   /*
   subUserLogin() {
     //TODO: Grab username and pw from form
   }
-
-  testUser = () => {
-    console.log(this.state.login);
-  };
 
   addOrRemove(id) {}
   */
@@ -140,6 +123,7 @@ class Search extends React.Component {
 
           <button>Click</button>
         </form>
+        <button onClick={this.handleGetWatchlist}>CLICK ME</button>
         <SearchBar />
         <div>{rows}</div>
       </div>
