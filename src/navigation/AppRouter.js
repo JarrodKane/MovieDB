@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Search from "../containers/Search";
-import WatchList from "../containers/WatchList";
+import WatchList from "../components/WatchList";
 
 function AppRouter() {
   return (

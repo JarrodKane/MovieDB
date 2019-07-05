@@ -19,13 +19,12 @@ class Search extends React.Component {
       pw: "15Mackdog$",
       login_session: {},
       userDetails: {},
-      watchList: []
+      watchList: [],
+      allProjects: JSON.parse(localStorage.getItem("allProjects")) || []
     };
-    //TODO: REMOVE THE UN AND PW when not testing
 
     this.handleChange = this.handleChange.bind(this);
     this.handleAuthenticate = this.handleAuthenticate.bind(this);
-    // this.getAccDet = this.getAccDet.bind(this);
     this.handleGetWatchlist = this.handleGetWatchlist.bind(this);
   }
 
