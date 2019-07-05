@@ -1,10 +1,26 @@
 import React from "react";
-
-import MovieRow from "../components/MovieRow";
+import { connect } from "react-redux";
+//import MovieRow from "../components/MovieRow";
 import SearchBar from "../components/SearchBar";
 
 import { createRequestToken, getAccDet } from "../api/OAuth";
 import { getWatchList } from "../api/UserFun";
+
+//Importing redux actions
+import { setUserNameField, setPasswordField, setSearchField } from "../actions";
+
+//Mapping reduxProps
+const mapStateToProps = state => {
+  return {
+    un: state.un
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onSearchChange: event => dispatch(setUserNameField(event.target.value))
+  };
+};
 
 class Search extends React.Component {
   constructor(props) {
@@ -15,12 +31,10 @@ class Search extends React.Component {
         { id: "243", title: "dingo", add: false }
       ],
       isSignedIn: false,
-      un: "Harrod",
       pw: "15Mackdog$",
       login_session: {},
       userDetails: {},
-      watchList: [],
-      allProjects: JSON.parse(localStorage.getItem("allProjects")) || []
+      watchList: []
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -77,17 +91,9 @@ class Search extends React.Component {
     this.setState({ watchList: watchList });
   }
 
-  /*
-  subUserLogin() {
-    //TODO: Grab username and pw from form
-  }
-
-  addOrRemove(id) {}
-  */
-
-  //TODO: Need a form to fill in for login if not logged in
   render() {
-    const rows = this.state.movies.map(row => (
+    const { un, pw } = this.state;
+    /*const rows = this.state.movies.map(row => (
       <MovieRow
         id={row.id}
         key={row.id}
@@ -95,6 +101,7 @@ class Search extends React.Component {
         addOrRemove={row.add}
       />
     ));
+    */
     return (
       <div>
         <form className="Username" onSubmit={this.handleAuthenticate}>
@@ -124,10 +131,13 @@ class Search extends React.Component {
         </form>
         <button onClick={this.handleGetWatchlist}>CLICK ME</button>
         <SearchBar />
-        <div>{rows}</div>
+        <div>{un}</div>
       </div>
     );
   }
 }
 
-export default Search;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Search);
