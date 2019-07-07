@@ -29,13 +29,6 @@ const initialState = {
   error: ""
 };
 
-// Using seperate initial states for input fields
-const initialStateInputs = {
-  un: "Harrod",
-  pw: "15Mackdog$",
-  search: ""
-};
-
 export const setFields = (state = initialState, action = {}) => {
   switch (action.type) {
     case CHANGE_USERNAME_FIELD:
@@ -49,7 +42,14 @@ export const setFields = (state = initialState, action = {}) => {
   }
 };
 
-export const requestToken = (state = initialState, action = {}) => {
+const initialStateAuth = {
+  isPending: true,
+  api: "9ccbc3e0393b7578cbf2eb8ae9f260c0",
+  requestToken: [],
+  error: ""
+};
+
+export const requestToken = (state = initialStateAuth, action = {}) => {
   switch (action.type) {
     case REQUEST_RTOKEN_PENDING:
       return Object.assign({}, state, { isPending: true });

@@ -109,7 +109,7 @@ class Search extends React.Component {
 
   render() {
     const { un, pw } = this.state;
-    const { api } = this.props;
+    const { onSearchChange } = this.props;
     /*const rows = this.state.movies.map(row => (
       <MovieRow
         id={row.id}
@@ -130,7 +130,7 @@ class Search extends React.Component {
               id="un"
               name="un"
               value={this.state.un}
-              onChange={this.handleChange}
+              onChange={onSearchChange}
             />
           </div>
           <div>
