@@ -17,19 +17,20 @@ import {
 //Mapping reduxProps
 const mapStateToProps = state => {
   return {
-    api: state.requestToken.api,
     un: state.setFields.un,
     pw: state.setFields.pw,
     isPending: state.requestToken.isPending,
     error: state.requestToken.error,
-    requestToken: state.requestToken.requestToken
+    requestToken: state.requestToken.requestToken,
+    data: state.requestToken.data,
+    api: state.requestToken.api
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onSearchChange: event => dispatch(setUserNameField(event.target.value)),
-    onRequestToken: api => dispatch(requestToken(api))
+    onRequestToken: data => dispatch(requestToken(data))
   };
 };
 
@@ -40,12 +41,7 @@ class Search extends React.Component {
       movies: [
         { id: "213", title: "Hacker", add: false },
         { id: "243", title: "dingo", add: false }
-      ],
-      isSignedIn: false,
-      pw: "15Mackdog$",
-      login_session: {},
-      userDetails: {},
-      watchList: []
+      ]
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -61,32 +57,17 @@ class Search extends React.Component {
     });
   }
 
-  // --- This is the main call tothe OAuth Function ---
-  // This function will go create a request_token, which then gets stored in state.
-  // It will then call the getAccDet to get the details of the user account
-  // The user detailss are then returned and stored in the state
-  /*
-  async handleAuthenticate(evt) {
-    evt.preventDefault();
-    const api = this.props.api;
-    let { un, pw } = this.state;
-    try {
-      let userAuth = await createRequestToken(api, un, pw);
-      this.setState({ login_session: userAuth });
-      let session_id = this.state.login_session.session_id;
-
-      let userDetails = await getAccDet(api, session_id);
-      this.setState({ userDetails: userDetails });
-    } catch (error) {}
-  }
-*/
   handleAuthenticate(e) {
     //Grab the api key from props
-    const api = this.props.api;
+    const data = {
+      api: this.props.api,
+      un: this.props.un,
+      pw: this.props.pw
+    };
     //Preventing the form from rerendering the screen
     e.preventDefault();
     // Calling the onRequestToken and passing in the api key that was just grabbed
-    this.props.onRequestToken(api);
+    this.props.onRequestToken(data);
   }
 
   //Gets the watchlist for the authenticated user if not singed in asks for sign in
@@ -108,8 +89,7 @@ class Search extends React.Component {
   }
 
   render() {
-    const { un, pw } = this.state;
-    const { onSearchChange } = this.props;
+    const { onSearchChange, data, un, pw, isPending } = this.props;
     /*const rows = this.state.movies.map(row => (
       <MovieRow
         id={row.id}
@@ -147,8 +127,7 @@ class Search extends React.Component {
           <button>Click</button>
         </form>
         <button onClick={this.handleGetWatchlist}>CLICK ME</button>
-        <SearchBar />
-        <div>{un}</div>
+        <div>{data.session_id}</div>
       </div>
     );
   }

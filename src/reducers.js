@@ -45,8 +45,8 @@ export const setFields = (state = initialState, action = {}) => {
 const initialStateAuth = {
   isPending: true,
   api: "9ccbc3e0393b7578cbf2eb8ae9f260c0",
-  requestToken: [],
-  error: ""
+  error: "",
+  data: []
 };
 
 export const requestToken = (state = initialStateAuth, action = {}) => {
@@ -56,7 +56,7 @@ export const requestToken = (state = initialStateAuth, action = {}) => {
 
     case REQUEST_RTOKEN_SUCCESS:
       return Object.assign({}, state, {
-        requestToken: action.payload,
+        data: action.payload,
         isPending: false
       });
 
