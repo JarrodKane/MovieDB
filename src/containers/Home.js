@@ -107,7 +107,7 @@ class Home extends React.Component {
               value={un}
               onChange={onUNChange}
             />
-            <i aria-hidden="true" class="user icon"></i>
+            <i aria-hidden="true" className="user icon"></i>
           </div>
         </div>
 
