@@ -1,7 +1,6 @@
 import React from "react";
-import MovieRow from "./MovieRow";
 
-const SearchContainer = props => {
+const WatchList = props => {
   console.log(props);
 
   return (
@@ -11,4 +10,4 @@ const SearchContainer = props => {
   );
 };
 
-export default SearchContainer;
+export default WatchList;
