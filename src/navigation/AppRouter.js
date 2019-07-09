@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import Search from "../containers/Search";
+import Home from "../containers/Home";
 import WatchList from "../containers/WatchList";
 
 function AppRouter() {
@@ -18,7 +18,7 @@ function AppRouter() {
             </li>
           </ul>
         </nav>
-        <Route path="/" exact component={Search} />
+        <Route path="/" exact component={Home} />
         <Route path="/watch_list/" component={WatchList} />
       </div>
     </Router>

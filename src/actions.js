@@ -1,5 +1,6 @@
 import axois from "./api/TheMovieDB";
 import { createRequestToken, getAccDet } from "./api/OAuth";
+import { getTVLatest } from "./api/TVshows";
 import {
   CHANGE_SEARCH_FIELD,
   CHANGE_USERNAME_FIELD,
@@ -12,7 +13,10 @@ import {
   REQUEST_RTOKEN_FAILED,
   REQUEST_ACC_PENDING,
   REQUEST_ACC_SUCCESS,
-  REQUEST_ACC_FAILED
+  REQUEST_ACC_FAILED,
+  REQUEST_TV_PENDING,
+  REQUEST_TV_SUCCESS,
+  REQUEST_TV_FAILED
 } from "./constants";
 
 // Changing inputs
@@ -49,11 +53,10 @@ export const requestToken = data => dispatch => {
 };
 
 //Set the account details for the account sign in
-/*
-export const requestAccount = data => dispatch => {
-  dispatch({ type: REQUEST_ACC_PENDING });
-  getAccDet(data.api, data.session_id)
-    .then(data => dispatch({ type: REQUEST_ACC_SUCCESS, payload: data }))
-    .catch(error => dispatch({ type: REQUEST_ACC_FAILED, payload: error }));
+
+export const requestTVShows = data => dispatch => {
+  dispatch({ type: REQUEST_TV_PENDING });
+  getTVLatest(data.api, data.page)
+    .then(data => dispatch({ type: REQUEST_TV_SUCCESS, payload: data }))
+    .catch(error => dispatch({ type: REQUEST_TV_FAILED, payload: error }));
 };
-*/

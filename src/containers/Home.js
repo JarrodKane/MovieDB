@@ -1,16 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
-//import MovieRow from "../components/MovieRow";
+import TVRow from "../components/TVRow";
 import SearchBar from "../components/SearchBar";
-
-import { getWatchList } from "../api/UserFun";
 
 //Importing redux actions
 import {
   setUserNameField,
   setPasswordField,
   setSearchField,
-  requestToken
+  requestToken,
+  requestTVShows
 } from "../actions";
 
 //Mapping reduxProps
@@ -23,7 +22,8 @@ const mapStateToProps = state => {
     requestToken: state.requestToken.requestToken,
     data: state.requestToken.data,
     api: state.requestToken.api,
-    account: state.requestAccount.account
+    account: state.requestAccount.account,
+    TVshows: state.requestTVShows.TVshows
   };
 };
 
@@ -32,23 +32,25 @@ const mapDispatchToProps = dispatch => {
     onUNChange: event => dispatch(setUserNameField(event.target.value)),
     onPWChange: event => dispatch(setPasswordField(event.target.value)),
     onSearchChange: event => dispatch(setSearchField(event.target.value)),
-    onRequestToken: data => dispatch(requestToken(data))
+    onRequestToken: data => dispatch(requestToken(data)),
+    onRequestTV: data => dispatch(requestTVShows(data))
   };
 };
 
-class Search extends React.Component {
+class Home extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      movies: [
-        { id: "213", title: "Hacker", add: false },
-        { id: "243", title: "dingo", add: false }
-      ]
-    };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleAuthenticate = this.handleAuthenticate.bind(this);
-    this.handleGetWatchlist = this.handleGetWatchlist.bind(this);
+  }
+
+  componentDidMount() {
+    let data = {
+      api: this.props.api,
+      page: 1
+    };
+    this.props.onRequestTV(data);
   }
 
   // This gets called when ever the input boxes are used
@@ -73,23 +75,6 @@ class Search extends React.Component {
     this.props.onRequestToken(data);
   }
 
-  //Gets the watchlist for the authenticated user if not singed in asks for sign in
-  // Makes an object of props to hand in
-  //const { userID, sort, session_id, language, page, api } = props;
-  //TODO: Change sort and page so we can pass as props
-  async handleGetWatchlist() {
-    let details = this.state.userDetails;
-    let props = {
-      sort: "created_at.asc",
-      page: "1",
-      userDetails: { details },
-      api: this.props.api,
-      session_id: this.state.login_session.session_id
-    };
-    let watchList = await getWatchList(props);
-    this.setState({ watchList: watchList });
-  }
-
   render() {
     const {
       onPWChange,
@@ -108,38 +93,38 @@ class Search extends React.Component {
         title={row.title}
         addOrRemove={row.add}
       />
-    ));
+    ));user
     */
     return (
-      <div>
-        <form className="Username" onSubmit={this.handleAuthenticate}>
-          <div>
-            <label htmlFor="un">User name</label>
+      <form className="Username ui  menu" onSubmit={this.handleAuthenticate}>
+        <div className="right item">
+          <div class="ui icon  input icon">
             <input
               type="text"
               placeholder="Username"
               id="un"
               name="un"
-              value={this.state.un}
+              value={un}
               onChange={onUNChange}
             />
+            <i aria-hidden="true" class="user icon"></i>
           </div>
-          <div>
-            <label htmlFor="pw">Password</label>
+        </div>
+
+        <div className="right item">
+          <div className="ui action input">
             <input
               type="password"
+              placeholder="Password"
               id="pw"
               name="pw"
-              value={this.state.pw}
+              value={pw}
               onChange={onPWChange}
             />
+            <button className="ui button">Login</button>
           </div>
-
-          <button>Click</button>
-        </form>
-        <button onClick={this.handleGetWatchlist}>CLICK ME</button>
-        <div>{id}</div>
-      </div>
+        </div>
+      </form>
     );
   }
 }
@@ -147,4 +132,4 @@ class Search extends React.Component {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Search);
+)(Home);
