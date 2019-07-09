@@ -9,6 +9,7 @@ export async function createRequestToken(api, un, pw) {
     let rtData = {};
 
     let data = {
+      api: api,
       username: un,
       password: pw,
       request_token: "",

@@ -7,14 +7,15 @@ import {
   REQUEST_MOVIES_FAILED,
   REQUEST_RTOKEN_PENDING,
   REQUEST_RTOKEN_SUCCESS,
-  REQUEST_RTOKEN_FAILED
+  REQUEST_RTOKEN_FAILED,
+  REQUEST_ACC_PENDING,
+  REQUEST_ACC_SUCCESS,
+  REQUEST_ACC_FAILED
 } from "./constants";
 
 // Setting inital state for the state
 const initialState = {
-  isPending: true,
   api: "9ccbc3e0393b7578cbf2eb8ae9f260c0",
-  requestToken: [],
   movies: [
     { id: "213", title: "Hacker", add: false },
     { id: "243", title: "dingo", add: false }
@@ -23,8 +24,6 @@ const initialState = {
   un: "Harrod",
   pw: "15Mackdog$",
   search: "",
-  login_session: {},
-  userDetails: {},
   watchList: [],
   error: ""
 };
@@ -61,6 +60,34 @@ export const requestToken = (state = initialStateAuth, action = {}) => {
       });
 
     case REQUEST_RTOKEN_FAILED:
+      return Object.assign({}, state, {
+        error: action.payload,
+        isPending: true
+      });
+    default:
+      return state;
+  }
+};
+
+const initialStateAccount = {
+  accountStat: false,
+  isPending: true,
+  error: "",
+  account: []
+};
+
+export const requestAccount = (state = initialStateAccount, action = {}) => {
+  switch (action.type) {
+    case REQUEST_ACC_PENDING:
+      return Object.assign({}, state, { isPending: true });
+
+    case REQUEST_ACC_SUCCESS:
+      return Object.assign({}, state, {
+        account: action.payload,
+        isPending: false
+      });
+
+    case REQUEST_ACC_FAILED:
       return Object.assign({}, state, {
         error: action.payload,
         isPending: true

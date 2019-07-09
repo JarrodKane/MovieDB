@@ -1,5 +1,5 @@
 import axois from "./api/TheMovieDB";
-import { createRequestToken } from "./api/OAuth";
+import { createRequestToken, getAccDet } from "./api/OAuth";
 import {
   CHANGE_SEARCH_FIELD,
   CHANGE_USERNAME_FIELD,
@@ -9,7 +9,10 @@ import {
   REQUEST_MOVIES_FAILED,
   REQUEST_RTOKEN_PENDING,
   REQUEST_RTOKEN_SUCCESS,
-  REQUEST_RTOKEN_FAILED
+  REQUEST_RTOKEN_FAILED,
+  REQUEST_ACC_PENDING,
+  REQUEST_ACC_SUCCESS,
+  REQUEST_ACC_FAILED
 } from "./constants";
 
 // Changing inputs
@@ -36,5 +39,21 @@ export const requestToken = data => dispatch => {
   dispatch({ type: REQUEST_RTOKEN_PENDING });
   createRequestToken(data.api, data.un, data.pw)
     .then(data => dispatch({ type: REQUEST_RTOKEN_SUCCESS, payload: data }))
-    .catch(error => dispatch({ type: REQUEST_RTOKEN_FAILED, payload: error }));
+    .catch(error => dispatch({ type: REQUEST_RTOKEN_FAILED, payload: error }))
+    .then(res => {
+      dispatch({ type: REQUEST_ACC_PENDING, data });
+      getAccDet(res.payload.api, res.payload.session_id)
+        .then(data => dispatch({ type: REQUEST_ACC_SUCCESS, payload: data }))
+        .catch(error => dispatch({ type: REQUEST_ACC_FAILED, payload: error }));
+    });
 };
+
+//Set the account details for the account sign in
+/*
+export const requestAccount = data => dispatch => {
+  dispatch({ type: REQUEST_ACC_PENDING });
+  getAccDet(data.api, data.session_id)
+    .then(data => dispatch({ type: REQUEST_ACC_SUCCESS, payload: data }))
+    .catch(error => dispatch({ type: REQUEST_ACC_FAILED, payload: error }));
+};
+*/

@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 //import MovieRow from "../components/MovieRow";
 import SearchBar from "../components/SearchBar";
 
-import { createRequestToken, getAccDet } from "../api/OAuth";
 import { getWatchList } from "../api/UserFun";
 
 //Importing redux actions
@@ -23,13 +22,16 @@ const mapStateToProps = state => {
     error: state.requestToken.error,
     requestToken: state.requestToken.requestToken,
     data: state.requestToken.data,
-    api: state.requestToken.api
+    api: state.requestToken.api,
+    account: state.requestAccount.account
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSearchChange: event => dispatch(setUserNameField(event.target.value)),
+    onUNChange: event => dispatch(setUserNameField(event.target.value)),
+    onPWChange: event => dispatch(setPasswordField(event.target.value)),
+    onSearchChange: event => dispatch(setSearchField(event.target.value)),
     onRequestToken: data => dispatch(requestToken(data))
   };
 };
@@ -59,13 +61,14 @@ class Search extends React.Component {
 
   handleAuthenticate(e) {
     //Grab the api key from props
-    const data = {
+    let data = {
       api: this.props.api,
       un: this.props.un,
       pw: this.props.pw
     };
     //Preventing the form from rerendering the screen
     e.preventDefault();
+
     // Calling the onRequestToken and passing in the api key that was just grabbed
     this.props.onRequestToken(data);
   }
@@ -75,7 +78,6 @@ class Search extends React.Component {
   //const { userID, sort, session_id, language, page, api } = props;
   //TODO: Change sort and page so we can pass as props
   async handleGetWatchlist() {
-    // let props = this.state.userDetails;
     let details = this.state.userDetails;
     let props = {
       sort: "created_at.asc",
@@ -89,7 +91,16 @@ class Search extends React.Component {
   }
 
   render() {
-    const { onSearchChange, data, un, pw, isPending } = this.props;
+    const {
+      onPWChange,
+      onUNChange,
+      onSearchChange,
+      data,
+      un,
+      pw,
+      account
+    } = this.props;
+    const { id } = account;
     /*const rows = this.state.movies.map(row => (
       <MovieRow
         id={row.id}
@@ -110,7 +121,7 @@ class Search extends React.Component {
               id="un"
               name="un"
               value={this.state.un}
-              onChange={onSearchChange}
+              onChange={onUNChange}
             />
           </div>
           <div>
@@ -120,14 +131,14 @@ class Search extends React.Component {
               id="pw"
               name="pw"
               value={this.state.pw}
-              onChange={this.handleChange}
+              onChange={onPWChange}
             />
           </div>
 
           <button>Click</button>
         </form>
         <button onClick={this.handleGetWatchlist}>CLICK ME</button>
-        <div>{data.session_id}</div>
+        <div>{id}</div>
       </div>
     );
   }

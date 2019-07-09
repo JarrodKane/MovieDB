@@ -7,11 +7,15 @@ import { createLogger } from "redux-logger";
 import thunkMiddleware from "redux-thunk";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import { setFields, requestToken } from "./reducers";
+import { setFields, requestToken, requestAccount } from "./reducers";
 
 //Added redux logger in for debugging purposes
 const logger = createLogger();
-const rootReducer = combineReducers({ setFields, requestToken });
+const rootReducer = combineReducers({
+  setFields,
+  requestToken,
+  requestAccount
+});
 const store = createStore(
   rootReducer,
   applyMiddleware(thunkMiddleware, logger)
