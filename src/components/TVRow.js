@@ -14,10 +14,10 @@ const TVRow = props => {
         <img
           src={Poster}
           alt={`Poster of ${name}`}
-          className="ui small image"
+          className="ui small image "
         />
       </td>
-      <td className="">{name}</td>
+      <td className="ui medium header">{name}</td>
       <td className="">{year}</td>
       <td className="">{`${percentageRating}%`}</td>
       <td className="">{lang}</td>
@@ -27,7 +27,7 @@ const TVRow = props => {
           className=" center aligned negative"
           onClick={handleClickAdd}
         >
-          <i id={id} aria-hidden="true" class="grey sign-in huge icon"></i>
+          <i id={id} aria-hidden="true" className="grey sign-in huge icon"></i>
           <div>Sign In</div>
         </td>
       ) : (
@@ -36,7 +36,7 @@ const TVRow = props => {
           className="selectable center aligned  huge icon"
           onClick={handleClickAdd}
         >
-          <i id={id} aria-hidden="true" class="red heart huge icon"></i>
+          <i id={id} aria-hidden="true" className="red heart huge icon"></i>
         </td>
       )}
     </tr>

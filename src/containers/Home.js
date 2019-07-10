@@ -64,6 +64,28 @@ class Home extends React.Component {
     }
   }
 
+  //waitinf foe the account details to be updated, then once they are it calls the check on the movies
+  componentDidUpdate(prevProps) {
+    if (prevProps.id !== this.props.account.id) {
+      console.log(this.props.account.id);
+    }
+  }
+  /*
+  componentDidUpdate() {
+    console.log(this.props.account.length === 0);
+    if (this.props.account.length === 0) {
+    } else {
+      console.log("RESTAUTH");
+      let data = {
+        api: this.props.api,
+        session_id: this.props.session_id
+      };
+
+      this.props.onRequestTVAuth(data);
+    }
+  }
+  */
+
   onhandleAuthTV() {
     console.log(this.props.account.length === 0);
     if (this.props.account.length === 0) {
@@ -105,31 +127,6 @@ class Home extends React.Component {
 
   // If the TV props does not exist it displays a loading, otherwise it will display the WatchList
   //TODO: Fix the loader , probabbly should have the conditional in the render to display loader not here
-  displayTVshows = () => {
-    const TVshows = this.props.TVshows;
-    //Conditional for displaying loader should be in the render to make it look better and not display any table etc
-    if (TVshows.length === 0) {
-      return <tr className="ui active centered inline loader"></tr>;
-    } else {
-      //If signed in, compare the returned list to the watchlist, otherwise return false
-      if (this.props.account.length === 0) {
-        console.log("Without AUTH");
-        return TVshows.results.map(show => (
-          <TVRow
-            id={show.id}
-            key={show.id}
-            name={show.name}
-            image={show.poster_path}
-            year={show.first_air_date}
-            rate={show.vote_average}
-            lang={show.original_language}
-            initAdd={true}
-            handleClickAdd={this.handleClickAdd}
-          />
-        ));
-      }
-    }
-  };
 
   handleTVShowsVSstate = () => {
     const TVshows = this.props.TVshows;
@@ -154,6 +151,35 @@ class Home extends React.Component {
       pw,
       session_id
     } = this.props;
+    const TVshows = this.props.TVshows;
+    let tvTable;
+
+    //Conditional for displaying loader should be in the render to make it look better and not display any table etc
+    if (TVshows.length === 0) {
+      tvTable = <tr className="ui active centered inline loader"></tr>;
+    } else {
+      //If signed in, compare the returned list to the watchlist, otherwise return false
+      if (this.props.account.length === 0) {
+        tvTable = TVshows.results.map(show => (
+          <TVRow
+            id={show.id}
+            key={show.id}
+            name={show.name}
+            image={show.poster_path}
+            year={show.first_air_date}
+            rate={show.vote_average}
+            lang={show.original_language}
+            initAdd={true}
+            handleClickAdd={this.handleClickAdd}
+          />
+        ));
+      } else {
+        tvTable = <tr className="ui active centered inline loader"></tr>;
+      }
+    }
+
+    //TODO: RENENDER HERE WITH THE CHECK CALL TO SEE IF IT HAS BEEN ADDED TO THEIR LIST
+    // CALL THEIR WATCHLIST AS SOON AS THEY SIGN IN TO MAKE IT EASIER
 
     return (
       <div className="ui bottomlayer">
@@ -188,20 +214,18 @@ class Home extends React.Component {
         </form>
 
         <div className="ui container">
-          <table className="ui celled table  ">
+          <table className="ui celled padded table  ">
             <thead className="">
               <tr className="">
-                <th className="">Cover</th>
-                <th className="">Title</th>
-                <th className="">Year</th>
-                <th className="">Average</th>
-                <th className="">Language</th>
-                <th className="">Add/Remove</th>
+                <th className="ui medium header">Cover</th>
+                <th className="ui medium header">Title</th>
+                <th className="ui medium header">Year</th>
+                <th className="ui medium header">Average</th>
+                <th className="ui medium header">Language</th>
+                <th className="ui medium header">Add/Remove</th>
               </tr>
             </thead>
-            <tbody className="">
-              {session_id ? this.handleTVShowsVSstate : this.displayTVshows()}
-            </tbody>
+            <tbody className="">{tvTable}</tbody>
             <tfoot className="">
               <tr className="">
                 <th colSpan="6" className="">
