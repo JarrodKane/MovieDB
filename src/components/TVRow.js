@@ -5,16 +5,17 @@ import React from "react";
 
 const MovieRow = props => {
   let { id, name, image, year, rate, lang } = props;
+  const percentageRating = rate * 10;
   const Poster = `https://image.tmdb.org/t/p/w500/${image}`;
   return (
     <tr id={id} className="">
-      <td className="">{name}</td>
-      <td className="">{year}</td>
-      <td className="">{rate}</td>
-      <td className="">{lang}</td>
       <td className="">
         <img src={Poster} alt={`Poster of ${name}`} class="ui small image" />
       </td>
+      <td className="">{name}</td>
+      <td className="">{year}</td>
+      <td className="">{`${percentageRating}%`}</td>
+      <td className="">{lang}</td>
       <td className="">
         IF user watchllist has then unadd button otherwise add button
       </td>

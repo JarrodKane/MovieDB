@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import SearchBar from "../components/SearchBar";
 import TVRow from "../components/TVRow";
 import "./Home.css";
-import Particles from "react-particles-js";
 
 //Importing redux actions
 import {
@@ -13,18 +12,6 @@ import {
   requestToken,
   requestTVShows
 } from "../actions";
-
-const particlesOptions = {
-  particles: {
-    number: {
-      value: 200,
-      density: {
-        enable: true,
-        value_area: 1500
-      }
-    }
-  }
-};
 
 //Mapping reduxProps
 const mapStateToProps = state => {
@@ -147,17 +134,17 @@ class Home extends React.Component {
             </div>
           </div>
         </form>
-        <Particles className="particles" params={particlesOptions} />
+
         <div className="ui container">
           <table className="ui celled table  ">
             <thead className="">
               <tr className="">
+                <th className="">Cover</th>
                 <th className="">Title</th>
                 <th className="">Year</th>
-                <th className="">Avg Rating</th>
+                <th className="">Average</th>
                 <th className="">Language</th>
-                <th className="">Poster</th>
-                <th className="">Add to List</th>
+                <th className="">Add/Remove</th>
               </tr>
             </thead>
             <tbody className="">{this.displayTVshows()}</tbody>
@@ -168,10 +155,6 @@ class Home extends React.Component {
                     <a className="icon item">
                       <i aria-hidden="true" class="chevron left icon"></i>
                     </a>
-                    <a className="item">1</a>
-                    <a className="item">2</a>
-                    <a className="item">3</a>
-                    <a className="item">4</a>
                     <a className="icon item">
                       <i aria-hidden="true" className="chevron right icon"></i>
                     </a>
