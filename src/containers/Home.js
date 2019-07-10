@@ -12,6 +12,7 @@ import {
   requestToken,
   requestTVShows,
   requestTVShowsAuth,
+  requestWatchList,
   requestAccountStates
 } from "../actions";
 
@@ -27,7 +28,8 @@ const mapStateToProps = state => {
     data: state.requestToken.data,
     api: state.requestToken.api,
     account: state.requestAccount.account,
-    TVshows: state.requestTVShows.TVshows
+    TVshows: state.requestTVShows.TVshows,
+    watchList: state.requestWatchList.watchList
   };
 };
 
@@ -39,7 +41,8 @@ const mapDispatchToProps = dispatch => {
     onRequestToken: data => dispatch(requestToken(data)),
     onRequestTV: data => dispatch(requestTVShows(data)),
     onRequestTVAuth: data => dispatch(requestTVShowsAuth(data)),
-    onRequestState: data => dispatch(requestAccountStates(data))
+    onRequestState: data => dispatch(requestAccountStates(data)),
+    onRequestWatchList: data => dispatch(requestWatchList(data))
   };
 };
 
@@ -64,12 +67,11 @@ class Home extends React.Component {
     }
   }
 
-  //waitinf foe the account details to be updated, then once they are it calls the check on the movies
-  componentDidUpdate(prevProps) {
-    if (prevProps.id !== this.props.account.id) {
-      console.log(this.props.account.id);
-    }
-  }
+  /*
+const { session_id, api, page, sort } = props;
+  let { id, iso_639_1 } = props.userDetails.details
+  */
+
   /*
   componentDidUpdate() {
     console.log(this.props.account.length === 0);

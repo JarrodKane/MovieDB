@@ -16,7 +16,10 @@ import {
   REQUEST_TV_FAILED,
   REQUEST_STATES_PENDING,
   REQUEST_STATES_SUCCESS,
-  REQUEST_STATES_FAILED
+  REQUEST_STATES_FAILED,
+  REQUEST_WATCHLIST_PENDING,
+  REQUEST_WATCHLIST_SUCCESS,
+  REQUEST_WATCHLIST_FAILED
 } from "./constants";
 
 // Setting inital state for the state
@@ -110,6 +113,7 @@ const initialStateTV = {
   stateCheck: []
 };
 
+// Request for a TV show without authentication
 export const requestTVShows = (state = initialStateTV, action = {}) => {
   switch (action.type) {
     case REQUEST_TV_PENDING:
@@ -122,6 +126,34 @@ export const requestTVShows = (state = initialStateTV, action = {}) => {
       });
 
     case REQUEST_TV_FAILED:
+      return Object.assign({}, state, {
+        error: action.payload,
+        isPending: true
+      });
+    default:
+      return state;
+  }
+};
+
+// -- Getting the users watchlist
+const initialWatchList = {
+  isPending: true,
+  error: "",
+  watchList: []
+};
+
+export const requestWatchList = (state = initialWatchList, action = {}) => {
+  switch (action.type) {
+    case REQUEST_WATCHLIST_PENDING:
+      return Object.assign({}, state, { isPending: true });
+
+    case REQUEST_WATCHLIST_SUCCESS:
+      return Object.assign({}, state, {
+        watchList: action.payload,
+        isPending: false
+      });
+
+    case REQUEST_WATCHLIST_FAILED:
       return Object.assign({}, state, {
         error: action.payload,
         isPending: true

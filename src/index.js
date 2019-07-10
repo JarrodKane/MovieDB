@@ -13,7 +13,8 @@ import {
   setFields,
   requestToken,
   requestAccount,
-  requestTVShows
+  requestTVShows,
+  requestWatchList
 } from "./reducers";
 
 //Added redux logger in for debugging purposes
@@ -22,7 +23,8 @@ const rootReducer = combineReducers({
   setFields,
   requestToken,
   requestAccount,
-  requestTVShows
+  requestTVShows,
+  requestWatchList
 });
 const store = createStore(
   rootReducer,
