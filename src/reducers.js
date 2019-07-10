@@ -13,7 +13,10 @@ import {
   REQUEST_ACC_FAILED,
   REQUEST_TV_PENDING,
   REQUEST_TV_SUCCESS,
-  REQUEST_TV_FAILED
+  REQUEST_TV_FAILED,
+  REQUEST_STATES_PENDING,
+  REQUEST_STATES_SUCCESS,
+  REQUEST_STATES_FAILED
 } from "./constants";
 
 // Setting inital state for the state
@@ -103,7 +106,8 @@ export const requestAccount = (state = initialStateAccount, action = {}) => {
 const initialStateTV = {
   isPending: true,
   error: "",
-  TVshows: []
+  TVshows: [],
+  stateCheck: []
 };
 
 export const requestTVShows = (state = initialStateTV, action = {}) => {
@@ -118,6 +122,29 @@ export const requestTVShows = (state = initialStateTV, action = {}) => {
       });
 
     case REQUEST_TV_FAILED:
+      return Object.assign({}, state, {
+        error: action.payload,
+        isPending: true
+      });
+    default:
+      return state;
+  }
+};
+
+//Adds in the check into stateCheck inside the initialStateTv
+export const requestAccountStates = (state = initialStateTV, action = {}) => {
+  switch (action.type) {
+    case REQUEST_STATES_PENDING:
+      return Object.assign({}, state, { isPending: true });
+
+    case REQUEST_STATES_SUCCESS:
+      return Object.assign({}, state, {
+        ...state,
+        stateCheck: [...state.stateCheck, action.payload],
+        isPending: false
+      });
+
+    case REQUEST_STATES_FAILED:
       return Object.assign({}, state, {
         error: action.payload,
         isPending: true

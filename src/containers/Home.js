@@ -10,7 +10,9 @@ import {
   setPasswordField,
   setSearchField,
   requestToken,
-  requestTVShows
+  requestTVShows,
+  requestTVShowsAuth,
+  requestAccountStates
 } from "../actions";
 
 //Mapping reduxProps
@@ -21,6 +23,7 @@ const mapStateToProps = state => {
     isPending: state.requestToken.isPending,
     error: state.requestToken.error,
     requestToken: state.requestToken.requestToken,
+    session_id: state.requestToken.data.session_id,
     data: state.requestToken.data,
     api: state.requestToken.api,
     account: state.requestAccount.account,
@@ -34,7 +37,9 @@ const mapDispatchToProps = dispatch => {
     onPWChange: event => dispatch(setPasswordField(event.target.value)),
     onSearchChange: event => dispatch(setSearchField(event.target.value)),
     onRequestToken: data => dispatch(requestToken(data)),
-    onRequestTV: data => dispatch(requestTVShows(data))
+    onRequestTV: data => dispatch(requestTVShows(data)),
+    onRequestTVAuth: data => dispatch(requestTVShowsAuth(data)),
+    onRequestState: data => dispatch(requestAccountStates(data))
   };
 };
 
@@ -48,12 +53,29 @@ class Home extends React.Component {
   }
 
   // Once the component mounts it will call an action to grab a list of the first page of popular tv shows
+  // If to make sure it only grabs it if the TVshows prop is blank
   componentDidMount() {
-    let data = {
-      api: this.props.api,
-      page: 1
-    };
-    this.props.onRequestTV(data);
+    if (this.props.TVshows.length === 0) {
+      let data = {
+        api: this.props.api,
+        page: 1
+      };
+      this.props.onRequestTV(data);
+    }
+  }
+
+  onhandleAuthTV() {
+    console.log(this.props.account.length === 0);
+    if (this.props.account.length === 0) {
+    } else {
+      console.log("RESTAUTH");
+      let data = {
+        api: this.props.api,
+        session_id: this.props.session_id
+      };
+
+      this.props.onRequestTVAuth(data);
+    }
   }
 
   // This gets called when ever the input boxes are used
@@ -64,17 +86,21 @@ class Home extends React.Component {
     });
   }
 
+  //This calls the action to autenticate the request_token with a users credentials
   handleAuthenticate = e => {
-    //Grab the api key from props
+    //Grab the api key from props, and other props
     let data = {
       api: this.props.api,
       un: this.props.un,
       pw: this.props.pw
     };
-    //Preventing the form from rerendering the screen
-    e.preventDefault();
-    // Calling the onRequestToken and passing in the api key that was just grabbed
-    this.props.onRequestToken(data);
+    e.preventDefault(); //Preventing the form from rerendering the screen
+    this.props.onRequestToken(data); // Calling the onRequestToken and passing in the api key that was just grabbed
+  };
+
+  handleClickAdd = e => {
+    let tv_id = e.target.id;
+    console.log(e.target.id);
   };
 
   // If the TV props does not exist it displays a loading, otherwise it will display the WatchList
@@ -85,23 +111,49 @@ class Home extends React.Component {
     if (TVshows.length === 0) {
       return <tr className="ui active centered inline loader"></tr>;
     } else {
-      return TVshows.results.map(show => (
-        <TVRow
-          id={show.id}
-          key={show.id}
-          name={show.name}
-          image={show.poster_path}
-          year={show.first_air_date}
-          rate={show.vote_average}
-          lang={show.original_language}
-        />
-      ));
+      //If signed in, compare the returned list to the watchlist, otherwise return false
+      if (this.props.account.length === 0) {
+        console.log("Without AUTH");
+        return TVshows.results.map(show => (
+          <TVRow
+            id={show.id}
+            key={show.id}
+            name={show.name}
+            image={show.poster_path}
+            year={show.first_air_date}
+            rate={show.vote_average}
+            lang={show.original_language}
+            initAdd={true}
+            handleClickAdd={this.handleClickAdd}
+          />
+        ));
+      }
     }
+  };
+
+  handleTVShowsVSstate = () => {
+    const TVshows = this.props.TVshows;
+    const rTVListState = "";
+
+    console.log("RESTAUTH");
+    let data = {
+      api: this.props.api,
+      session_id: this.props.session_id
+    };
+
+    //this.props.onRequestTVAuth(data);
   };
 
   render() {
     // Deconstructing the props to use easier
-    const { onPWChange, onUNChange, onSearchChange, un, pw } = this.props;
+    const {
+      onPWChange,
+      onUNChange,
+      onSearchChange,
+      un,
+      pw,
+      session_id
+    } = this.props;
 
     return (
       <div className="ui bottomlayer">
@@ -147,13 +199,15 @@ class Home extends React.Component {
                 <th className="">Add/Remove</th>
               </tr>
             </thead>
-            <tbody className="">{this.displayTVshows()}</tbody>
+            <tbody className="">
+              {session_id ? this.handleTVShowsVSstate : this.displayTVshows()}
+            </tbody>
             <tfoot className="">
               <tr className="">
-                <th colspan="6" class="">
+                <th colSpan="6" className="">
                   <div className="ui pagination right floated menu">
                     <a className="icon item">
-                      <i aria-hidden="true" class="chevron left icon"></i>
+                      <i aria-hidden="true" className="chevron left icon"></i>
                     </a>
                     <a className="icon item">
                       <i aria-hidden="true" className="chevron right icon"></i>

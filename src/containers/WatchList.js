@@ -1,5 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
+import TvShowWatchList from "../components/TvShowWatchList";
+import "./WatchList.css";
 
 //Importing redux actions
 import {
@@ -38,13 +40,35 @@ const mapDispatchToProps = dispatch => {
 class Home extends React.Component {
   // Once the component mounts it will call an action to grab a list of the first page of popular tv shows
   //Checks if user details are there otherwise just returns a recomended movie, and suggestion to sign in
+  //TODO: show a random movie if not signed in
   getWatchList() {
     console.log(this.props.account);
     let watchlistTable = "";
     if (this.props.account.length === 0) {
-      return (watchlistTable = <div>Nothing in there</div>);
+      return (watchlistTable = (
+        <div>
+          <div className="ui red message header">
+            Please sign in to get your TV watchList
+          </div>
+          <div className="ui divider"></div>
+          <div className="ui divided items">
+            <TvShowWatchList />
+          </div>
+        </div>
+      ));
     } else {
-      return (watchlistTable = <div>There's stuff in there</div>);
+      /*return WatchList.results.map(show => (
+        <TvShowWatchList
+          id={show.id}
+          key={show.id}
+          name={show.name}
+          image={show.poster_path}
+          year={show.first_air_date}
+          rate={show.vote_average}
+          lang={show.original_language}
+        />
+      ));
+      */
     }
   }
 
@@ -92,7 +116,7 @@ class Home extends React.Component {
             </div>
           </div>
         </form>
-        <div>{this.getWatchList()}</div>
+        <div className="ui container watchListTable">{this.getWatchList()}</div>
       </div>
     );
   }
@@ -102,3 +126,5 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Home);
+
+// <div className="ui divided items">{this.getWatchList()}</div>

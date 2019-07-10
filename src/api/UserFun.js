@@ -32,3 +32,15 @@ export async function getWatchList(props) {
     alert(e);
   }
 }
+
+export async function getAccountStatus(props, tv_id) {
+  const { session_id, api } = props;
+  try {
+    let res = await axois.get(
+      `/tv/${tv_id}/account_states?api_key=${api}&language=en-US&session_id=${session_id}`
+    );
+    return res.data;
+  } catch (e) {
+    alert(e);
+  }
+}

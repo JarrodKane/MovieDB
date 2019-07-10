@@ -1,6 +1,7 @@
 import axois from "./api/TheMovieDB";
 import { createRequestToken, getAccDet } from "./api/OAuth";
 import { getTVLatest } from "./api/TVshows";
+import { getAccountStatus } from "./api/UserFun";
 import {
   CHANGE_SEARCH_FIELD,
   CHANGE_USERNAME_FIELD,
@@ -16,7 +17,10 @@ import {
   REQUEST_ACC_FAILED,
   REQUEST_TV_PENDING,
   REQUEST_TV_SUCCESS,
-  REQUEST_TV_FAILED
+  REQUEST_TV_FAILED,
+  REQUEST_STATES_PENDING,
+  REQUEST_STATES_SUCCESS,
+  REQUEST_STATES_FAILED
 } from "./constants";
 
 // Changing inputs
@@ -59,4 +63,27 @@ export const requestTVShows = data => dispatch => {
   getTVLatest(data.api, data.page)
     .then(data => dispatch({ type: REQUEST_TV_SUCCESS, payload: data }))
     .catch(error => dispatch({ type: REQUEST_TV_FAILED, payload: error }));
+};
+
+export const requestTVShowsAuth = data => dispatch => {
+  dispatch({ type: REQUEST_TV_PENDING });
+  getTVLatest(data.api, data.page)
+    .then(data => dispatch({ type: REQUEST_TV_SUCCESS, payload: data }))
+    .catch(error => dispatch({ type: REQUEST_TV_FAILED, payload: error }))
+    .then(res => {
+      getAccountStatus({ type: REQUEST_STATES_PENDING, data });
+      getAccDet(res.payload.api, res.payload.session_id, res.payload.tv_id)
+        .then(data => dispatch({ type: REQUEST_STATES_SUCCESS, payload: data }))
+        .catch(error =>
+          dispatch({ type: REQUEST_STATES_FAILED, payload: error })
+        );
+    });
+};
+
+//Action to call the getAccountStatus
+export const requestAccountStates = (data, tv_id) => dispatch => {
+  dispatch({ type: REQUEST_STATES_PENDING });
+  getAccountStatus(data, tv_id)
+    .then(data => dispatch({ type: REQUEST_STATES_SUCCESS, payload: data }))
+    .catch(error => dispatch({ type: REQUEST_STATES_FAILED, payload: error }));
 };
