@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import SearchBar from "../components/SearchBar";
 import TVRow from "../components/TVRow";
 import "./Home.css";
+import Particles from "react-particles-js";
 
 //Importing redux actions
 import {
@@ -12,6 +13,18 @@ import {
   requestToken,
   requestTVShows
 } from "../actions";
+
+const particlesOptions = {
+  particles: {
+    number: {
+      value: 200,
+      density: {
+        enable: true,
+        value_area: 1500
+      }
+    }
+  }
+};
 
 //Mapping reduxProps
 const mapStateToProps = state => {
@@ -104,7 +117,7 @@ class Home extends React.Component {
     const { onPWChange, onUNChange, onSearchChange, un, pw } = this.props;
 
     return (
-      <div className="ui">
+      <div className="ui bottomlayer">
         <form className="Username ui  menu" onSubmit={this.handleAuthenticate}>
           <div className="right item">
             <div className="ui icon  input icon">
@@ -134,8 +147,8 @@ class Home extends React.Component {
             </div>
           </div>
         </form>
-
-        <div className="ui container ">
+        <Particles className="particles" params={particlesOptions} />
+        <div className="ui container">
           <table className="ui celled table  ">
             <thead className="">
               <tr className="">

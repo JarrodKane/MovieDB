@@ -5,7 +5,6 @@ const Header = () => {
   return (
     <div>
       <h1>My Tv shows</h1>
-
       <AppRouter />
     </div>
   );
