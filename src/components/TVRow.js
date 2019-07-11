@@ -4,7 +4,7 @@ import React from "react";
 //TODO: Add icon to button and callback
 
 const TVRow = props => {
-  let { id, name, image, year, rate, lang, initAdd, handleClickAdd } = props;
+  let { id, name, image, year, rate, lang, handleClickAdd, isSignedIn } = props;
   const percentageRating = rate * 10;
   const Poster = `https://image.tmdb.org/t/p/w500/${image}`;
 
@@ -21,7 +21,7 @@ const TVRow = props => {
       <td className="">{year}</td>
       <td className="">{`${percentageRating}%`}</td>
       <td className="">{lang}</td>
-      {initAdd ? (
+      {isSignedIn ? (
         <td
           id={id}
           className=" center aligned negative"

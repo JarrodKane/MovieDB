@@ -11,7 +11,6 @@ import {
   setSearchField,
   requestToken,
   requestTVShows,
-  requestTVShowsAuth,
   requestWatchList,
   requestAccountStates
 } from "../actions";
@@ -40,7 +39,6 @@ const mapDispatchToProps = dispatch => {
     onSearchChange: event => dispatch(setSearchField(event.target.value)),
     onRequestToken: data => dispatch(requestToken(data)),
     onRequestTV: data => dispatch(requestTVShows(data)),
-    onRequestTVAuth: data => dispatch(requestTVShowsAuth(data)),
     onRequestState: data => dispatch(requestAccountStates(data)),
     onRequestWatchList: data => dispatch(requestWatchList(data))
   };
@@ -51,12 +49,12 @@ class Home extends React.Component {
     super(props);
 
     // Bound instead of using arrow functions for handle change, otherwise you create a new function each time the arrow change is called
-    // I did not do this for handleAuthenticate since it'll only be called a few times
     this.handleChange = this.handleChange.bind(this);
   }
 
   // Once the component mounts it will call an action to grab a list of the first page of popular tv shows
   // If to make sure it only grabs it if the TVshows prop is blank
+  // TODO: Add signout to wipe TVShow props etc, s/ If to make sure it only grabs it if the TVshows prop is blanko that this will be called again
   componentDidMount() {
     if (this.props.TVshows.length === 0) {
       let data = {
@@ -64,41 +62,6 @@ class Home extends React.Component {
         page: 1
       };
       this.props.onRequestTV(data);
-    }
-  }
-
-  /*
-const { session_id, api, page, sort } = props;
-  let { id, iso_639_1 } = props.userDetails.details
-  */
-
-  /*
-  componentDidUpdate() {
-    console.log(this.props.account.length === 0);
-    if (this.props.account.length === 0) {
-    } else {
-      console.log("RESTAUTH");
-      let data = {
-        api: this.props.api,
-        session_id: this.props.session_id
-      };
-
-      this.props.onRequestTVAuth(data);
-    }
-  }
-  */
-
-  onhandleAuthTV() {
-    console.log(this.props.account.length === 0);
-    if (this.props.account.length === 0) {
-    } else {
-      console.log("RESTAUTH");
-      let data = {
-        api: this.props.api,
-        session_id: this.props.session_id
-      };
-
-      this.props.onRequestTVAuth(data);
     }
   }
 
@@ -112,19 +75,34 @@ const { session_id, api, page, sort } = props;
 
   //This calls the action to autenticate the request_token with a users credentials
   handleAuthenticate = e => {
-    //Grab the api key from props, and other props
     let data = {
       api: this.props.api,
       un: this.props.un,
-      pw: this.props.pw
+      pw: this.props.pw,
+      page: 1
     };
     e.preventDefault(); //Preventing the form from rerendering the screen
     this.props.onRequestToken(data); // Calling the onRequestToken and passing in the api key that was just grabbed
+    this.props.onRequestTV(data);
   };
 
+  //This will get take the id from the event, passs it in with the users account, and either apply or remove it from the watchList
   handleClickAdd = e => {
     let tv_id = e.target.id;
     console.log(e.target.id);
+  };
+
+  //This handles checking the TV show state agains the users watchlist, gives back a function to either yes they have it, or no they don't
+  //TODO: Check based on if user is signed in
+  handleCheckWatchListVsTVshow = () => {
+    const account = this.props.account;
+    console.log("Called");
+    if (account.length === 0) {
+      return true;
+    } else {
+      return false;
+      //Check if user has it, and set it to true or false
+    }
   };
 
   // If the TV props does not exist it displays a loading, otherwise it will display the WatchList
@@ -139,8 +117,6 @@ const { session_id, api, page, sort } = props;
       api: this.props.api,
       session_id: this.props.session_id
     };
-
-    //this.props.onRequestTVAuth(data);
   };
 
   render() {
@@ -155,29 +131,26 @@ const { session_id, api, page, sort } = props;
     } = this.props;
     const TVshows = this.props.TVshows;
     let tvTable;
+    let isSignedIn = this.handleCheckWatchListVsTVshow();
 
     //Conditional for displaying loader should be in the render to make it look better and not display any table etc
     if (TVshows.length === 0) {
-      tvTable = <tr className="ui active centered inline loader"></tr>;
+      tvTable = <tr className="ui active inline centerd huge loader"></tr>;
     } else {
       //If signed in, compare the returned list to the watchlist, otherwise return false
-      if (this.props.account.length === 0) {
-        tvTable = TVshows.results.map(show => (
-          <TVRow
-            id={show.id}
-            key={show.id}
-            name={show.name}
-            image={show.poster_path}
-            year={show.first_air_date}
-            rate={show.vote_average}
-            lang={show.original_language}
-            initAdd={true}
-            handleClickAdd={this.handleClickAdd}
-          />
-        ));
-      } else {
-        tvTable = <tr className="ui active centered inline loader"></tr>;
-      }
+      tvTable = TVshows.results.map(show => (
+        <TVRow
+          id={show.id}
+          key={show.id}
+          name={show.name}
+          image={show.poster_path}
+          year={show.first_air_date}
+          rate={show.vote_average}
+          lang={show.original_language}
+          handleClickAdd={this.handleClickAdd}
+          isSignedIn={isSignedIn}
+        />
+      ));
     }
 
     //TODO: RENENDER HERE WITH THE CHECK CALL TO SEE IF IT HAS BEEN ADDED TO THEIR LIST

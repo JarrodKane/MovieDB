@@ -101,6 +101,7 @@ export const requestTVShows = data => dispatch => {
     .catch(error => dispatch({ type: REQUEST_TV_FAILED, payload: error }));
 };
 
+/*
 export const requestTVShowsAuth = data => dispatch => {
   dispatch({ type: REQUEST_TV_PENDING });
   getTVLatest(data.api, data.page)
@@ -115,6 +116,7 @@ export const requestTVShowsAuth = data => dispatch => {
         );
     });
 };
+*/
 
 //Action to call the getAccountStatus
 export const requestAccountStates = (data, tv_id) => dispatch => {
