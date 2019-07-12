@@ -29,11 +29,9 @@ const initialState = {
     { id: "213", title: "Hacker", add: false },
     { id: "243", title: "dingo", add: false }
   ],
-  isSignedIn: false,
   un: "Harrod",
   pw: "15Mackdog$",
   search: "",
-  watchList: [],
   error: ""
 };
 
@@ -79,10 +77,11 @@ export const requestToken = (state = initialStateAuth, action = {}) => {
 };
 
 const initialStateAccount = {
-  accountStat: false,
+  // accountStat: false,
   isPending: true,
   error: "",
-  account: []
+  account: [],
+  isSignedIn: false
 };
 
 export const requestAccount = (state = initialStateAccount, action = {}) => {
@@ -93,13 +92,14 @@ export const requestAccount = (state = initialStateAccount, action = {}) => {
     case REQUEST_ACC_SUCCESS:
       return Object.assign({}, state, {
         account: action.payload,
+        isSignedIn: true,
         isPending: false
       });
 
     case REQUEST_ACC_FAILED:
       return Object.assign({}, state, {
         error: action.payload,
-        isPending: true
+        isPending: false
       });
     default:
       return state;

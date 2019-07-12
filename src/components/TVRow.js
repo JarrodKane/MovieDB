@@ -4,7 +4,16 @@ import React from "react";
 //TODO: Add icon to button and callback
 
 const TVRow = props => {
-  let { id, name, image, year, rate, lang, handleClickAdd, isSignedIn } = props;
+  const {
+    id,
+    name,
+    image,
+    year,
+    rate,
+    lang,
+    handleClickAdd,
+    isSignedIn
+  } = props;
   const percentageRating = rate * 10;
   const Poster = `https://image.tmdb.org/t/p/w500/${image}`;
 
@@ -24,19 +33,19 @@ const TVRow = props => {
       {isSignedIn ? (
         <td
           id={id}
+          className="selectable center aligned  huge icon "
+          onClick={handleClickAdd}
+        >
+          <i id={id} aria-hidden="true" className="red heart huge icon"></i>
+        </td>
+      ) : (
+        <td
+          id={id}
           className=" center aligned negative"
           onClick={handleClickAdd}
         >
           <i id={id} aria-hidden="true" className="grey sign-in huge icon"></i>
           <div>Sign In</div>
-        </td>
-      ) : (
-        <td
-          id={id}
-          className="selectable center aligned  huge icon"
-          onClick={handleClickAdd}
-        >
-          <i id={id} aria-hidden="true" className="red heart huge icon"></i>
         </td>
       )}
     </tr>

@@ -1,8 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
+import "./Home.css";
+// Components
+import TVTable from "../components/TVTable";
 import SearchBar from "../components/SearchBar";
 import TVRow from "../components/TVRow";
-import "./Home.css";
 
 //Importing redux actions
 import {
@@ -27,6 +29,7 @@ const mapStateToProps = state => {
     data: state.requestToken.data,
     api: state.requestToken.api,
     account: state.requestAccount.account,
+    isSignedIn: state.requestAccount.isSignedIn,
     TVshows: state.requestTVShows.TVshows,
     watchList: state.requestWatchList.watchList
   };
@@ -75,13 +78,13 @@ class Home extends React.Component {
 
   //This calls the action to autenticate the request_token with a users credentials
   handleAuthenticate = e => {
+    e.preventDefault(); //Preventing the form from rerendering the screen
     let data = {
       api: this.props.api,
       un: this.props.un,
       pw: this.props.pw,
       page: 1
     };
-    e.preventDefault(); //Preventing the form from rerendering the screen
     this.props.onRequestToken(data); // Calling the onRequestToken and passing in the api key that was just grabbed
     this.props.onRequestTV(data);
   };
@@ -106,8 +109,7 @@ class Home extends React.Component {
   };
 
   // If the TV props does not exist it displays a loading, otherwise it will display the WatchList
-  //TODO: Fix the loader , probabbly should have the conditional in the render to display loader not here
-
+  //TODO: Fix the loader , probabbly should have the conditional in the render to display loader not her
   handleTVShowsVSstate = () => {
     const TVshows = this.props.TVshows;
     const rTVListState = "";
@@ -119,6 +121,9 @@ class Home extends React.Component {
     };
   };
 
+  //
+  // -- RENDER --
+  //
   render() {
     // Deconstructing the props to use easier
     const {
@@ -127,18 +132,17 @@ class Home extends React.Component {
       onSearchChange,
       un,
       pw,
-      session_id
+      isSignedIn,
+      TVshows
     } = this.props;
-    const TVshows = this.props.TVshows;
-    let tvTable;
-    let isSignedIn = this.handleCheckWatchListVsTVshow();
 
     //Conditional for displaying loader should be in the render to make it look better and not display any table etc
+    //TODO: refactor into a function to call this section and drop into render
+    let tvElements;
     if (TVshows.length === 0) {
-      tvTable = <tr className="ui active inline centerd huge loader"></tr>;
+      tvElements = <tr className="ui active inline centerd huge loader"></tr>;
     } else {
-      //If signed in, compare the returned list to the watchlist, otherwise return false
-      tvTable = TVshows.results.map(show => (
+      tvElements = TVshows.results.map(show => (
         <TVRow
           id={show.id}
           key={show.id}
@@ -153,69 +157,22 @@ class Home extends React.Component {
       ));
     }
 
-    //TODO: RENENDER HERE WITH THE CHECK CALL TO SEE IF IT HAS BEEN ADDED TO THEIR LIST
-    // CALL THEIR WATCHLIST AS SOON AS THEY SIGN IN TO MAKE IT EASIER
-
+    //TODO: Move login/search into its own component
+    //TODO: Move the table into own componnet
     return (
-      <div className="ui bottomlayer">
-        <form className="Username ui  menu" onSubmit={this.handleAuthenticate}>
-          <div className="right item">
-            <div className="ui icon  input icon">
-              <input
-                type="text"
-                placeholder="Username"
-                id="un"
-                name="un"
-                value={un}
-                onChange={onUNChange}
-              />
-              <i aria-hidden="true" className="user icon"></i>
-            </div>
-          </div>
-
-          <div className="right item">
-            <div className="ui action input">
-              <input
-                type="password"
-                placeholder="Password"
-                id="pw"
-                name="pw"
-                value={pw}
-                onChange={onPWChange}
-              />
-              <button className="ui button">Login</button>
-            </div>
-          </div>
-        </form>
+      <div className="ui">
+        <SearchBar
+          un={un}
+          pw={pw}
+          search=""
+          submitLogin={this.handleAuthenticate}
+          onUNChange={onUNChange}
+          onPWChange={onPWChange}
+          onSearchChange=""
+        />
 
         <div className="ui container">
-          <table className="ui celled padded table  ">
-            <thead className="">
-              <tr className="">
-                <th className="ui medium header">Cover</th>
-                <th className="ui medium header">Title</th>
-                <th className="ui medium header">Year</th>
-                <th className="ui medium header">Average</th>
-                <th className="ui medium header">Language</th>
-                <th className="ui medium header">Add/Remove</th>
-              </tr>
-            </thead>
-            <tbody className="">{tvTable}</tbody>
-            <tfoot className="">
-              <tr className="">
-                <th colSpan="6" className="">
-                  <div className="ui pagination right floated menu">
-                    <a className="icon item">
-                      <i aria-hidden="true" className="chevron left icon"></i>
-                    </a>
-                    <a className="icon item">
-                      <i aria-hidden="true" className="chevron right icon"></i>
-                    </a>
-                  </div>
-                </th>
-              </tr>
-            </tfoot>
-          </table>
+          <TVTable tvElements={tvElements} />
         </div>
       </div>
     );
