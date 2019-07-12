@@ -43,7 +43,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-class Home extends React.Component {
+class WatchList extends React.Component {
   // Once the component mounts it will call an action to grab a list of the first page of popular tv shows
   //Checks if user details are there otherwise just returns a recomended movie, and suggestion to sign in
   //TODO: show a random movie if not signed in
@@ -94,7 +94,6 @@ class Home extends React.Component {
   }
 
   render() {
-    // Deconstructing the props to use easier
     const {
       onPWChange,
       onUNChange,
@@ -107,11 +106,9 @@ class Home extends React.Component {
 
     let watchlistTable;
     if (isSignedIn) {
-      console.log("They are signed in");
       if (watchList.length === 0) {
         this.handleGetWatchList();
       } else {
-        console.log(watchList.results);
         watchlistTable = watchList.results.map(show => (
           <TvShowWatchList
             id={show.id}
@@ -125,7 +122,6 @@ class Home extends React.Component {
         ));
       }
     } else {
-      console.log("REACHERD");
       watchlistTable = (
         <div>
           <div className="ui red message header">
@@ -159,6 +155,4 @@ class Home extends React.Component {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Home);
-
-// <div className="ui divided items">{this.getWatchList()}</div>
+)(WatchList);

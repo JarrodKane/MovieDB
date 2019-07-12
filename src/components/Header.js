@@ -3,7 +3,7 @@ import AppRouter from "../navigation/AppRouter";
 
 const Header = () => {
   return (
-    <div>
+    <div className="ui  segment">
       <h1>My Tv shows</h1>
       <AppRouter />
     </div>
