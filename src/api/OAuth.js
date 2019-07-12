@@ -52,26 +52,3 @@ export async function getAccDet(api, session_id) {
     alert(e);
   }
 }
-
-/*
-//Getting account details so that we can use the ID of the account to grab the wathclist and other calls
-async getAccDet() {
-  const api = this.props.api;
-  const session_id = this.state.session_id;
-  let userDeets = [];
-
-  try {
-    let res = await axois.get(
-      `/account?api_key=${api}&session_id=${session_id}`
-    );
-    userDeets = res.data;
-    this.setState({ userDeets });
-    this.getWatchList();
-  } catch (e) {
-    alert(e);
-    this.setState({ loading: false });
-  }
-}
-*/
-
-//TODO: Delete session

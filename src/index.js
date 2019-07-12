@@ -14,7 +14,8 @@ import {
   requestToken,
   requestAccount,
   requestTVShows,
-  requestWatchList
+  requestWatchList,
+  requestAccountStates
 } from "./reducers";
 
 //Added redux logger in for debugging purposes
@@ -24,7 +25,8 @@ const rootReducer = combineReducers({
   requestToken,
   requestAccount,
   requestTVShows,
-  requestWatchList
+  requestWatchList,
+  requestAccountStates
 });
 const store = createStore(
   rootReducer,

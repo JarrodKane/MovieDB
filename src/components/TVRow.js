@@ -12,10 +12,47 @@ const TVRow = props => {
     rate,
     lang,
     handleClickAdd,
-    isSignedIn
+    isSignedIn,
+    checkShowVsWatchList,
+    haveTV
   } = props;
   const percentageRating = rate * 10;
   const Poster = `https://image.tmdb.org/t/p/w500/${image}`;
+
+  let addOrDis;
+  if (isSignedIn === false) {
+    addOrDis = (
+      <td id={id} className=" center aligned negative" onClick={handleClickAdd}>
+        <i id={id} aria-hidden="true" className="grey sign-in huge icon"></i>
+        <div>Sign In</div>
+      </td>
+    );
+  } else {
+    checkShowVsWatchList(id);
+
+    /* if (checkTV.watchlist === true) {
+      addOrDis = (
+        <td
+          id={id}
+          className="selectable center aligned  huge icon "
+          onClick={handleClickAdd}
+        >
+          <i id={id} aria-hidden="true" className="red heart huge icon"></i>
+        </td>
+      );
+    } else {
+      addOrDis = (
+        <td
+          id={id}
+          className="selectable center aligned  huge icon "
+          onClick={handleClickAdd}
+        >
+          <i id={id} aria-hidden="true" className="grey heart huge icon"></i>
+        </td>
+      );
+    }
+    */
+  }
 
   return (
     <tr id={id} className="">
@@ -30,24 +67,8 @@ const TVRow = props => {
       <td className="">{year}</td>
       <td className="">{`${percentageRating}%`}</td>
       <td className="">{lang}</td>
-      {isSignedIn ? (
-        <td
-          id={id}
-          className="selectable center aligned  huge icon "
-          onClick={handleClickAdd}
-        >
-          <i id={id} aria-hidden="true" className="red heart huge icon"></i>
-        </td>
-      ) : (
-        <td
-          id={id}
-          className=" center aligned negative"
-          onClick={handleClickAdd}
-        >
-          <i id={id} aria-hidden="true" className="grey sign-in huge icon"></i>
-          <div>Sign In</div>
-        </td>
-      )}
+
+      {addOrDis}
     </tr>
   );
 };

@@ -31,7 +31,8 @@ const mapStateToProps = state => {
     account: state.requestAccount.account,
     isSignedIn: state.requestAccount.isSignedIn,
     TVshows: state.requestTVShows.TVshows,
-    watchList: state.requestWatchList.watchList
+    watchList: state.requestWatchList.watchList,
+    haveTV: state.requestWatchList.haveTV
   };
 };
 
@@ -89,6 +90,21 @@ class Home extends React.Component {
     this.props.onRequestTV(data);
   };
 
+  // TODO: CHEKC THROUGH GIVEN ID TO THE WATCHLIST, IF IT IS NOT ON THE WATCHLIST RETURN A FALSE OTHERWISE A TRUE
+  //NO need to make a call to check an individual tv show since we already have the watchlist
+  // Compare TV shows and watchlist as soon as user is signed in once instead of multiple times
+  checkShowVsWatchList = tv_id => {
+    let tvShows = this.props.TVshows;
+    console.log(tvShows);
+    let data = {
+      api: this.props.api,
+      session_id: this.props.session_id,
+      tv_id: tv_id
+    };
+
+    //this.props.onRequestState(data);
+  };
+
   //This will get take the id from the event, passs it in with the users account, and either apply or remove it from the watchList
   handleClickAdd = e => {
     let tv_id = e.target.id;
@@ -108,19 +124,6 @@ class Home extends React.Component {
     }
   };
 
-  // If the TV props does not exist it displays a loading, otherwise it will display the WatchList
-  //TODO: Fix the loader , probabbly should have the conditional in the render to display loader not her
-  handleTVShowsVSstate = () => {
-    const TVshows = this.props.TVshows;
-    const rTVListState = "";
-
-    console.log("RESTAUTH");
-    let data = {
-      api: this.props.api,
-      session_id: this.props.session_id
-    };
-  };
-
   //
   // -- RENDER --
   //
@@ -133,7 +136,8 @@ class Home extends React.Component {
       un,
       pw,
       isSignedIn,
-      TVshows
+      TVshows,
+      haveTV
     } = this.props;
 
     //Conditional for displaying loader should be in the render to make it look better and not display any table etc
@@ -153,6 +157,8 @@ class Home extends React.Component {
           lang={show.original_language}
           handleClickAdd={this.handleClickAdd}
           isSignedIn={isSignedIn}
+          checkShowVsWatchList={this.checkShowVsWatchList}
+          haveTV={haveTV}
         />
       ));
     }

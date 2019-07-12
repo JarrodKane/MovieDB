@@ -21,8 +21,8 @@ export async function getWatchList(props) {
   }
 }
 
-export async function getAccountStatus(props, tv_id) {
-  const { session_id, api } = props;
+export async function getAccountStatus(data) {
+  const { api, session_id, tv_id } = data;
   try {
     let res = await axois.get(
       `/tv/${tv_id}/account_states?api_key=${api}&language=en-US&session_id=${session_id}`

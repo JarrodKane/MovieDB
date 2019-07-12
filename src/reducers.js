@@ -110,6 +110,7 @@ const initialStateTV = {
   isPending: true,
   error: "",
   TVshows: [],
+  haveTV: false,
   stateCheck: []
 };
 
@@ -122,6 +123,7 @@ export const requestTVShows = (state = initialStateTV, action = {}) => {
     case REQUEST_TV_SUCCESS:
       return Object.assign({}, state, {
         TVshows: action.payload,
+        haveTV: false,
         isPending: false
       });
 
@@ -163,7 +165,7 @@ export const requestWatchList = (state = initialWatchList, action = {}) => {
   }
 };
 
-//Adds in the check into stateCheck inside the initialStateTv
+//Gets back a status of if the movie is in the watchlist or not
 export const requestAccountStates = (state = initialStateTV, action = {}) => {
   switch (action.type) {
     case REQUEST_STATES_PENDING:
@@ -172,7 +174,7 @@ export const requestAccountStates = (state = initialStateTV, action = {}) => {
     case REQUEST_STATES_SUCCESS:
       return Object.assign({}, state, {
         ...state,
-        stateCheck: [...state.stateCheck, action.payload],
+        stateCheck: action.payload,
         isPending: false
       });
 
