@@ -12,7 +12,7 @@ function AppRouter() {
   return (
     <Router>
       <div>
-        <nav className="ui  pointing secondary menu">
+        <nav className="ui  pointing secondary menu container ">
           <NavLink className=" item" exact to="/" activeClassName="active">
             Home
           </NavLink>

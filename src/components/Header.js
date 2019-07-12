@@ -3,8 +3,10 @@ import AppRouter from "../navigation/AppRouter";
 
 const Header = () => {
   return (
-    <div className="ui  segment">
-      <h1>My Tv shows</h1>
+    <div className="ui ">
+      <h1 className=" ui huge inverted vertical center aligned segment">
+        My Tv shows
+      </h1>
       <AppRouter />
     </div>
   );
