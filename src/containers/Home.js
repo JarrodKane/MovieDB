@@ -59,7 +59,7 @@ class Home extends React.Component {
 
   // Once the component mounts it will call an action to grab a list of the first page of popular tv shows
   // If to make sure it only grabs it if the TVshows prop is blank
-  //If the user is signed in and the component mounts it will check through the watchlist to update what the user already have added or not
+  //If the user is signed in and the component mounts it will check through the watchlist to update what the user already has added or not
   componentDidMount() {
     const isSignedIn = this.props.isSignedIn;
     if (this.props.TVshows.length === 0) {
@@ -145,11 +145,10 @@ class Home extends React.Component {
       }
     };
     this.props.onRequestAddOrRemove(data);
-    //this.handleGetWatchList();
-    /*if (addOrRemove === false) {
-      this.props.onRemoveFromWatch(tv_id);
-    }
-    */
+    this.handleGetWatchList();
+    //*if (addOrRemove === false) {
+    // this.props.onRemoveFromWatch(tv_id);
+    //}
   };
 
   //

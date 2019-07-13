@@ -4,7 +4,7 @@ import React from "react";
 //TODO: Add icon to button and callback
 
 const TvShowWatchList = props => {
-  let { id, name, image, year, rate, desc } = props;
+  let { id, name, image, year, rate, desc, handleClickAdd } = props;
   const Poster = `https://image.tmdb.org/t/p/w500/${image}`;
 
   if (props.id === undefined) {
@@ -23,12 +23,6 @@ const TvShowWatchList = props => {
             <span className="cinema">IFC</span>
           </div>
           <div className="description">Description stuff</div>
-          <div className="extra">
-            <button className="ui primary right floated button">
-              Buy tickets
-              <i aria-hidden="true" className="right chevron icon"></i>
-            </button>
-          </div>
         </div>
       </div>
     );
@@ -41,12 +35,15 @@ const TvShowWatchList = props => {
         <div className="content">
           <div className="header">{name}</div>
           <div className="meta">
-            <span className="cinema">IFC</span>
+            <span className="cinema">
+              Year: {year} - Ratting: {rate}
+            </span>
           </div>
+
           <div className="description">{desc}</div>
           <div className="extra">
-            <button className="ui primary right floated button">
-              Buy tickets
+            <button id={id} className="ui primary button">
+              Remove From List
               <i aria-hidden="true" className="right chevron icon"></i>
             </button>
           </div>

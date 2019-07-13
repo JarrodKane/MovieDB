@@ -133,7 +133,11 @@ class WatchList extends React.Component {
           onPWChange={onPWChange}
           onSearchChange=""
         />
-        <div className="ui container watchListTable">{watchlistTable}</div>
+        <div className="ui">
+          <div className="ui divided items watchListTable">
+            {watchlistTable}
+          </div>
+        </div>
       </div>
     );
   }

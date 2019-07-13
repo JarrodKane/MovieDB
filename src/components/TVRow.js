@@ -33,7 +33,9 @@ const TVRow = props => {
       );
       //call watchlist, to map through an compare
     } else {
+      //TODO: Need to change to a while loop to run at least once even if no result
       let watchListS = watchList.results;
+
       for (let i = 0; i < watchListS.length; i++) {
         if (watchListS[i].id === id) {
           addOrDis = (
