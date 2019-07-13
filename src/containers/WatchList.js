@@ -44,25 +44,11 @@ const mapDispatchToProps = dispatch => {
 };
 
 class WatchList extends React.Component {
-  // Once the component mounts it will call an action to grab a list of the first page of popular tv shows
-  //Checks if user details are there otherwise just returns a recomended movie, and suggestion to sign in
-  //TODO: show a random movie if not signed in
-
-  //If a user now logs in, it will make the call for the users watchlist
-  /* componentDidUpdate() {
-    let data = {
-      api: this.props.api,
-      page: 1
-    };
-    // this.props.onRequestTV(data);
-  }
-  */
-
+  // If the user is signed in mounting this component will get the users current watchlist
   componentDidMount() {
     const { isSignedIn } = this.props;
 
-    if (!isSignedIn) {
-    } else {
+    if (isSignedIn) {
       this.handleGetWatchList();
     }
   }
@@ -90,6 +76,7 @@ class WatchList extends React.Component {
       page: page,
       iso_639_1: iso_639_1
     };
+    console.log(data);
     this.props.onRequestWatchList(data);
   }
 
@@ -118,6 +105,7 @@ class WatchList extends React.Component {
             year={show.first_air_date}
             rate={show.vote_average}
             lang={show.original_language}
+            desc={show.overview}
           />
         ));
       }

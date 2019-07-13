@@ -4,8 +4,7 @@ import React from "react";
 //TODO: Add icon to button and callback
 
 const TvShowWatchList = props => {
-  let { id, name, image, year, rate, lang } = props;
-  const percentageRating = rate * 10;
+  let { id, name, image, year, rate, desc } = props;
   const Poster = `https://image.tmdb.org/t/p/w500/${image}`;
 
   if (props.id === undefined) {
@@ -44,7 +43,7 @@ const TvShowWatchList = props => {
           <div className="meta">
             <span className="cinema">IFC</span>
           </div>
-          <div className="description">Description stuff</div>
+          <div className="description">{desc}</div>
           <div className="extra">
             <button className="ui primary right floated button">
               Buy tickets

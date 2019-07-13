@@ -1,11 +1,5 @@
 import axois from "../api/TheMovieDB";
 
-// Only returns 20 per page
-////Object { avatar: {…}, id: 8537434, iso_639_1: "en", iso_3166_1: "US", name: "", include_adult: false, username: "Harrod" }
-// Which ISO is used for language?
-//TV shows will always display with the most recent tv shows when called
-
-//TODO: Change so that it can grab you any tv show list not just the most popular
 export async function getTVLatest(api, page = 1) {
   try {
     let rtData = {};
@@ -18,7 +12,6 @@ export async function getTVLatest(api, page = 1) {
       .get(`tv/popular?api_key=${api}&language=en-US&page=${page}`)
       .then(res => (data["TVshows"] = res.data));
 
-    // data["TVshows"] = res.data;
     rtData = data.TVshows;
     return rtData;
   } catch (e) {

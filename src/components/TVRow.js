@@ -1,8 +1,5 @@
 import React from "react";
 
-//TODO: needs the callback for signed in, delete, and add to list
-//TODO: Add icon to button and callback
-
 const TVRow = props => {
   const {
     id,

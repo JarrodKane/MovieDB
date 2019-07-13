@@ -25,10 +25,6 @@ import {
 // Setting inital state for the state
 const initialState = {
   api: "9ccbc3e0393b7578cbf2eb8ae9f260c0",
-  movies: [
-    { id: "213", title: "Hacker", add: false },
-    { id: "243", title: "dingo", add: false }
-  ],
   un: "Harrod",
   pw: "15Mackdog$",
   search: "",

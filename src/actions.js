@@ -71,8 +71,9 @@ export const requestToken = data => dispatch => {
 
 //Action to call the watchlist
 export const requestWatchList = data => dispatch => {
+  console.log("IS CLLAED");
   dispatch({ type: REQUEST_WATCHLIST_PENDING });
-  getWatchList(data)
+  getWatchList(data.api, data.session_id, data)
     .then(data => dispatch({ type: REQUEST_WATCHLIST_SUCCESS, payload: data }))
     .catch(error =>
       dispatch({ type: REQUEST_WATCHLIST_FAILED, payload: error })

@@ -41,7 +41,6 @@ const mapDispatchToProps = dispatch => {
     onUNChange: event => dispatch(setUserNameField(event.target.value)),
     onPWChange: event => dispatch(setPasswordField(event.target.value)),
     onSearchChange: event => dispatch(setSearchField(event.target.value)),
-    //onRequestToken: data => dispatch(requestToken(data)),
     onRequestToken: data => dispatch(requestToken(data)),
     onRequestTV: data => dispatch(requestTVShows(data)),
     onRequestState: data => dispatch(requestAccountStates(data)),
@@ -52,21 +51,33 @@ const mapDispatchToProps = dispatch => {
 class Home extends React.Component {
   constructor(props) {
     super(props);
-
-    // Bound instead of using arrow functions for handle change, otherwise you create a new function each time the arrow change is called
     this.handleChange = this.handleChange.bind(this);
   }
 
   // Once the component mounts it will call an action to grab a list of the first page of popular tv shows
   // If to make sure it only grabs it if the TVshows prop is blank
-  // TODO: Add signout to wipe TVShow props etc, s/ If to make sure it only grabs it if the TVshows prop is blanko that this will be called again
+  //If the user is signed in and the component mounts it will check through the watchlist to update what the user already have added or not
   componentDidMount() {
+    const isSignedIn = this.props.isSignedIn;
     if (this.props.TVshows.length === 0) {
       let data = {
         api: this.props.api,
         page: 1
       };
       this.props.onRequestTV(data);
+    }
+    if (isSignedIn) {
+      const { api, session_id, page = 1, sort = "created_at.asc" } = this.props;
+      const { id, iso_639_1 } = this.props.account;
+      const data = {
+        api: api,
+        session_id: session_id,
+        id: id,
+        sort: sort,
+        page: page,
+        iso_639_1: iso_639_1
+      };
+      this.props.onRequestWatchList(data);
     }
   }
 
@@ -91,21 +102,6 @@ class Home extends React.Component {
     this.props.onRequestTV(data);
   };
 
-  // TODO: CHEKC THROUGH GIVEN ID TO THE WATCHLIST, IF IT IS NOT ON THE WATCHLIST RETURN A FALSE OTHERWISE A TRUE
-  //NO need to make a call to check an individual tv show since we already have the watchlist
-  // Compare TV shows and watchlist as soon as user is signed in once instead of multiple times
-  checkShowVsWatchList = tv_id => {
-    let tvShows = this.props.TVshows;
-    console.log(tvShows);
-    let data = {
-      api: this.props.api,
-      session_id: this.props.session_id,
-      tv_id: tv_id
-    };
-
-    //this.props.onRequestState(data);
-  };
-
   handleGetWatchList() {
     const { api, session_id, page = 1, sort = "created_at.asc" } = this.props;
     const { id, iso_639_1 } = this.props.account;
@@ -122,22 +118,10 @@ class Home extends React.Component {
   }
 
   //This will get take the id from the event, passs it in with the users account, and either apply or remove it from the watchList
+  // Change the css to red rather than recalling the watchlist
   handleClickAdd = e => {
     let tv_id = e.target.id;
     console.log(e.target.id);
-  };
-
-  //This handles checking the TV show state agains the users watchlist, gives back a function to either yes they have it, or no they don't
-  //TODO: Check based on if user is signed in
-  handleCheckWatchListVsTVshow = () => {
-    const account = this.props.account;
-    console.log("Called");
-    if (account.length === 0) {
-      return true;
-    } else {
-      return false;
-      //Check if user has it, and set it to true or false
-    }
   };
 
   //
@@ -157,8 +141,6 @@ class Home extends React.Component {
       watchList
     } = this.props;
 
-    //Conditional for displaying loader should be in the render to make it look better and not display any table etc
-    //TODO: refactor into a function to call this section and drop into render
     let tvElements;
     if (TVshows.length === 0) {
       tvElements = <tr className="ui active inline centerd huge loader"></tr>;
@@ -197,8 +179,6 @@ class Home extends React.Component {
       ));
     }
 
-    //TODO: Move login/search into its own component
-    //TODO: Move the table into own componnet
     return (
       <div className="ui">
         <SearchBar
