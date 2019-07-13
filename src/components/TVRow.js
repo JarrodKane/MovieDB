@@ -13,12 +13,13 @@ const TVRow = props => {
     lang,
     handleClickAdd,
     isSignedIn,
-    checkShowVsWatchList,
-    haveTV
+    haveTV,
+    watchList
   } = props;
   const percentageRating = rate * 10;
   const Poster = `https://image.tmdb.org/t/p/w500/${image}`;
 
+  let found = false;
   let addOrDis;
   if (isSignedIn === false) {
     addOrDis = (
@@ -28,30 +29,50 @@ const TVRow = props => {
       </td>
     );
   } else {
-    checkShowVsWatchList(id);
-
-    /* if (checkTV.watchlist === true) {
+    if (watchList.length === 0) {
       addOrDis = (
         <td
           id={id}
-          className="selectable center aligned  huge icon "
+          className=" center aligned negative"
           onClick={handleClickAdd}
         >
-          <i id={id} aria-hidden="true" className="red heart huge icon"></i>
+          <i id={id} aria-hidden="true" className="grey sign-in huge icon"></i>
+          <div>Sign In</div>
         </td>
       );
+      //call watchlist, to map through an compare
     } else {
-      addOrDis = (
-        <td
-          id={id}
-          className="selectable center aligned  huge icon "
-          onClick={handleClickAdd}
-        >
-          <i id={id} aria-hidden="true" className="grey heart huge icon"></i>
-        </td>
-      );
+      let watchListS = watchList.results;
+      for (let i = 0; i < watchListS.length; i++) {
+        console.log("laosd");
+        if (watchListS[i].id === id) {
+          addOrDis = (
+            <td
+              id={id}
+              className="selectable center aligned  huge icon "
+              onClick={handleClickAdd}
+            >
+              <i id={id} aria-hidden="true" className="red heart huge icon"></i>
+            </td>
+          );
+          break;
+        } else {
+          addOrDis = (
+            <td
+              id={id}
+              className="selectable center aligned  huge icon "
+              onClick={handleClickAdd}
+            >
+              <i
+                id={id}
+                aria-hidden="true"
+                className="grey heart huge icon"
+              ></i>
+            </td>
+          );
+        }
+      }
     }
-    */
   }
 
   return (

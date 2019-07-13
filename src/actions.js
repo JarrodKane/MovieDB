@@ -43,16 +43,29 @@ export const setSearchField = text => ({
 
 // OAuth
 //Requesting for a request_token with api key
+
 export const requestToken = data => dispatch => {
+  let { api } = data;
   dispatch({ type: REQUEST_RTOKEN_PENDING });
   createRequestToken(data.api, data.un, data.pw)
     .then(data => dispatch({ type: REQUEST_RTOKEN_SUCCESS, payload: data }))
     .catch(error => dispatch({ type: REQUEST_RTOKEN_FAILED, payload: error }))
     .then(res => {
       dispatch({ type: REQUEST_ACC_PENDING, data });
+      let session_id = res.payload.session_id;
       getAccDet(res.payload.api, res.payload.session_id)
         .then(data => dispatch({ type: REQUEST_ACC_SUCCESS, payload: data }))
-        .catch(error => dispatch({ type: REQUEST_ACC_FAILED, payload: error }));
+        .catch(error => dispatch({ type: REQUEST_ACC_FAILED, payload: error }))
+        .then(res => {
+          dispatch({ type: REQUEST_WATCHLIST_PENDING, data });
+          getWatchList(api, session_id, res.payload)
+            .then(data =>
+              dispatch({ type: REQUEST_WATCHLIST_SUCCESS, payload: data })
+            )
+            .catch(error =>
+              dispatch({ type: REQUEST_WATCHLIST_FAILED, payload: error })
+            );
+        });
     });
 };
 

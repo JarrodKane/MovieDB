@@ -41,6 +41,7 @@ const mapDispatchToProps = dispatch => {
     onUNChange: event => dispatch(setUserNameField(event.target.value)),
     onPWChange: event => dispatch(setPasswordField(event.target.value)),
     onSearchChange: event => dispatch(setSearchField(event.target.value)),
+    //onRequestToken: data => dispatch(requestToken(data)),
     onRequestToken: data => dispatch(requestToken(data)),
     onRequestTV: data => dispatch(requestTVShows(data)),
     onRequestState: data => dispatch(requestAccountStates(data)),
@@ -105,6 +106,21 @@ class Home extends React.Component {
     //this.props.onRequestState(data);
   };
 
+  handleGetWatchList() {
+    const { api, session_id, page = 1, sort = "created_at.asc" } = this.props;
+    const { id, iso_639_1 } = this.props.account;
+
+    const data = {
+      api: api,
+      session_id: session_id,
+      id: id,
+      sort: sort,
+      page: page,
+      iso_639_1: iso_639_1
+    };
+    this.props.onRequestWatchList(data);
+  }
+
   //This will get take the id from the event, passs it in with the users account, and either apply or remove it from the watchList
   handleClickAdd = e => {
     let tv_id = e.target.id;
@@ -137,7 +153,8 @@ class Home extends React.Component {
       pw,
       isSignedIn,
       TVshows,
-      haveTV
+      haveTV,
+      watchList
     } = this.props;
 
     //Conditional for displaying loader should be in the render to make it look better and not display any table etc
@@ -145,6 +162,23 @@ class Home extends React.Component {
     let tvElements;
     if (TVshows.length === 0) {
       tvElements = <tr className="ui active inline centerd huge loader"></tr>;
+    } else if (isSignedIn) {
+      console.log("Called");
+      tvElements = TVshows.results.map(show => (
+        <TVRow
+          id={show.id}
+          key={show.id}
+          name={show.name}
+          image={show.poster_path}
+          year={show.first_air_date}
+          rate={show.vote_average}
+          lang={show.original_language}
+          handleClickAdd={this.handleClickAdd}
+          isSignedIn={isSignedIn}
+          haveTV={haveTV}
+          watchList={watchList}
+        />
+      ));
     } else {
       tvElements = TVshows.results.map(show => (
         <TVRow
@@ -157,8 +191,8 @@ class Home extends React.Component {
           lang={show.original_language}
           handleClickAdd={this.handleClickAdd}
           isSignedIn={isSignedIn}
-          checkShowVsWatchList={this.checkShowVsWatchList}
           haveTV={haveTV}
+          watchList={watchList}
         />
       ));
     }

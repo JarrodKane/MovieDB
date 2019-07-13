@@ -2,15 +2,8 @@ import axois from "../api/TheMovieDB";
 
 // -- Holds the calls related to user function once a user has logged in
 
-export async function getWatchList(props) {
-  const {
-    api,
-    id,
-    session_id,
-    iso_639_1,
-    page = 1,
-    sort = "created_at.asc"
-  } = props;
+export async function getWatchList(api, session_id, data) {
+  const { id, iso_639_1, page = 1, sort = "created_at.asc" } = data;
   try {
     let res = await axois.get(
       `account/${id}/watchlist/tv?api_key=${api}&language=${iso_639_1}&session_id=${session_id}&sort_by=${sort}&page=${page}`
@@ -32,3 +25,26 @@ export async function getAccountStatus(data) {
     alert(e);
   }
 }
+
+/*
+
+
+export async function getWatchList(props) {
+  const {
+    api,
+    id,
+    session_id,
+    iso_639_1,
+    page = 1,
+    sort = "created_at.asc"
+  } = props;
+  try {
+    let res = await axois.get(
+      `account/${id}/watchlist/tv?api_key=${api}&language=${iso_639_1}&session_id=${session_id}&sort_by=${sort}&page=${page}`
+    );
+    return res.data;
+  } catch (e) {
+    alert(e);
+  }
+}
+*/
