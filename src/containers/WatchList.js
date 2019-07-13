@@ -76,7 +76,6 @@ class WatchList extends React.Component {
       page: page,
       iso_639_1: iso_639_1
     };
-    console.log(data);
     this.props.onRequestWatchList(data);
   }
 

@@ -19,7 +19,12 @@ import {
   REQUEST_STATES_FAILED,
   REQUEST_WATCHLIST_PENDING,
   REQUEST_WATCHLIST_SUCCESS,
-  REQUEST_WATCHLIST_FAILED
+  REQUEST_WATCHLIST_FAILED,
+  REQUEST_ADDORREMOVE_PENDING,
+  REQUEST_ADDORREMOVE_SUCCESS,
+  REQUEST_ADDORREMOVE_FAILED,
+  ADD_TV,
+  REMOVE_TV
 } from "./constants";
 
 // Setting inital state for the state
@@ -179,6 +184,60 @@ export const requestAccountStates = (state = initialStateTV, action = {}) => {
         error: action.payload,
         isPending: true
       });
+    default:
+      return state;
+  }
+};
+
+const initialWatchListAddRemove = {
+  isPending: true,
+  error: "",
+  tvShow: []
+};
+
+export const requestAddOrRemoves = (
+  state = initialWatchListAddRemove,
+  action = {}
+) => {
+  switch (action.type) {
+    case REQUEST_WATCHLIST_PENDING:
+      return Object.assign({}, state, { isPending: true });
+
+    case REQUEST_WATCHLIST_SUCCESS:
+      return Object.assign({}, state, {
+        tvShow: action.payload,
+        isPending: false
+      });
+
+    case REQUEST_WATCHLIST_FAILED:
+      return Object.assign({}, state, {
+        error: action.payload,
+        isPending: true
+      });
+    default:
+      return state;
+  }
+};
+
+/*
+const initialWatchList = {
+  isPending: true,
+  error: "",
+  watchList: []
+};
+*/
+
+export const addOrDelete = (state = initialWatchList, action) => {
+  switch (action.type) {
+    case REMOVE_TV:
+      //let tv_id = action.payload;
+      return {
+        ...state,
+        watchList: state.watchList.filter(
+          show => show.watchList.results.id !== action.tv_id
+        )
+      };
+
     default:
       return state;
   }

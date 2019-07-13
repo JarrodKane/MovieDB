@@ -10,13 +10,11 @@ const TVRow = props => {
     lang,
     handleClickAdd,
     isSignedIn,
-    haveTV,
     watchList
   } = props;
   const percentageRating = rate * 10;
   const Poster = `https://image.tmdb.org/t/p/w500/${image}`;
 
-  let found = false;
   let addOrDis;
   if (isSignedIn === false) {
     addOrDis = (
@@ -28,11 +26,7 @@ const TVRow = props => {
   } else {
     if (watchList.length === 0) {
       addOrDis = (
-        <td
-          id={id}
-          className=" center aligned negative"
-          onClick={handleClickAdd}
-        >
+        <td id={id} className=" center aligned negative">
           <i id={id} aria-hidden="true" className="grey sign-in huge icon"></i>
           <div>Sign In</div>
         </td>
@@ -41,27 +35,30 @@ const TVRow = props => {
     } else {
       let watchListS = watchList.results;
       for (let i = 0; i < watchListS.length; i++) {
-        console.log("laosd");
         if (watchListS[i].id === id) {
           addOrDis = (
             <td
-              id={id}
+              id={`R-${id}`}
               className="selectable center aligned  huge icon "
               onClick={handleClickAdd}
             >
-              <i id={id} aria-hidden="true" className="red heart huge icon"></i>
+              <i
+                id={`R-${id}`}
+                aria-hidden="true"
+                className="red heart huge icon"
+              ></i>
             </td>
           );
           break;
         } else {
           addOrDis = (
             <td
-              id={id}
+              id={`A-${id}`}
               className="selectable center aligned  huge icon "
               onClick={handleClickAdd}
             >
               <i
-                id={id}
+                id={`A-${id}`}
                 aria-hidden="true"
                 className="grey heart huge icon"
               ></i>

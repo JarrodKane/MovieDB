@@ -14,7 +14,9 @@ import {
   requestToken,
   requestTVShows,
   requestWatchList,
-  requestAccountStates
+  requestAccountStates,
+  requestAddOrRemoves,
+  deleteShow
 } from "../actions";
 
 //Mapping reduxProps
@@ -31,8 +33,7 @@ const mapStateToProps = state => {
     account: state.requestAccount.account,
     isSignedIn: state.requestAccount.isSignedIn,
     TVshows: state.requestTVShows.TVshows,
-    watchList: state.requestWatchList.watchList,
-    haveTV: state.requestWatchList.haveTV
+    watchList: state.requestWatchList.watchList
   };
 };
 
@@ -44,7 +45,9 @@ const mapDispatchToProps = dispatch => {
     onRequestToken: data => dispatch(requestToken(data)),
     onRequestTV: data => dispatch(requestTVShows(data)),
     onRequestState: data => dispatch(requestAccountStates(data)),
-    onRequestWatchList: data => dispatch(requestWatchList(data))
+    onRequestWatchList: data => dispatch(requestWatchList(data)),
+    onRequestAddOrRemove: data => dispatch(requestAddOrRemoves(data)),
+    onRemoveFromWatch: data => dispatch(deleteShow(data))
   };
 };
 
@@ -120,8 +123,33 @@ class Home extends React.Component {
   //This will get take the id from the event, passs it in with the users account, and either apply or remove it from the watchList
   // Change the css to red rather than recalling the watchlist
   handleClickAdd = e => {
-    let tv_id = e.target.id;
-    console.log(e.target.id);
+    let arr = e.target.id.split("-");
+    let tv_id = arr[1];
+    let addOrRemove;
+    if (arr[0] === "R") {
+      addOrRemove = false;
+    } else {
+      addOrRemove = true;
+    }
+    const { session_id, api } = this.props;
+    const { id } = this.props.account;
+
+    const data = {
+      api: api,
+      session_id: session_id,
+      id: id,
+      body: {
+        media_type: "tv",
+        media_id: tv_id,
+        watchlist: addOrRemove
+      }
+    };
+    this.props.onRequestAddOrRemove(data);
+    //this.handleGetWatchList();
+    /*if (addOrRemove === false) {
+      this.props.onRemoveFromWatch(tv_id);
+    }
+    */
   };
 
   //
@@ -137,7 +165,6 @@ class Home extends React.Component {
       pw,
       isSignedIn,
       TVshows,
-      haveTV,
       watchList
     } = this.props;
 
@@ -145,7 +172,6 @@ class Home extends React.Component {
     if (TVshows.length === 0) {
       tvElements = <tr className="ui active inline centerd huge loader"></tr>;
     } else if (isSignedIn) {
-      console.log("Called");
       tvElements = TVshows.results.map(show => (
         <TVRow
           id={show.id}
@@ -157,7 +183,6 @@ class Home extends React.Component {
           lang={show.original_language}
           handleClickAdd={this.handleClickAdd}
           isSignedIn={isSignedIn}
-          haveTV={haveTV}
           watchList={watchList}
         />
       ));
@@ -173,7 +198,6 @@ class Home extends React.Component {
           lang={show.original_language}
           handleClickAdd={this.handleClickAdd}
           isSignedIn={isSignedIn}
-          haveTV={haveTV}
           watchList={watchList}
         />
       ));

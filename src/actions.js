@@ -1,7 +1,7 @@
 import axois from "./api/TheMovieDB";
 import { createRequestToken, getAccDet } from "./api/OAuth";
 import { getTVLatest } from "./api/TVshows";
-import { getAccountStatus, getWatchList } from "./api/UserFun";
+import { getAccountStatus, getWatchList, addOrRemove } from "./api/UserFun";
 import {
   CHANGE_SEARCH_FIELD,
   CHANGE_USERNAME_FIELD,
@@ -20,7 +20,12 @@ import {
   REQUEST_WATCHLIST_FAILED,
   REQUEST_STATES_PENDING,
   REQUEST_STATES_SUCCESS,
-  REQUEST_STATES_FAILED
+  REQUEST_STATES_FAILED,
+  REQUEST_ADDORREMOVE_PENDING,
+  REQUEST_ADDORREMOVE_SUCCESS,
+  REQUEST_ADDORREMOVE_FAILED,
+  ADD_TV,
+  REMOVE_TV
 } from "./constants";
 
 // Changing inputs
@@ -36,6 +41,11 @@ export const setPasswordField = text => ({
 
 export const setSearchField = text => ({
   type: CHANGE_SEARCH_FIELD,
+  payload: text
+});
+
+export const deleteShow = text => ({
+  type: REMOVE_TV,
   payload: text
 });
 
@@ -95,4 +105,26 @@ export const requestAccountStates = data => dispatch => {
   getAccountStatus(data)
     .then(data => dispatch({ type: REQUEST_STATES_SUCCESS, payload: data }))
     .catch(error => dispatch({ type: REQUEST_STATES_FAILED, payload: error }));
+};
+
+export const requestAddOrRemoves = data => dispatch => {
+  let { api, session_id } = data;
+  dispatch({ type: REQUEST_ADDORREMOVE_PENDING });
+  addOrRemove(data)
+    .then(data =>
+      dispatch({ type: REQUEST_ADDORREMOVE_SUCCESS, payload: data })
+    )
+    .catch(error =>
+      dispatch({ type: REQUEST_ADDORREMOVE_FAILED, payload: error })
+    )
+    .then(res => {
+      dispatch({ type: REQUEST_WATCHLIST_PENDING, data });
+      getWatchList(api, session_id, res.payload)
+        .then(data =>
+          dispatch({ type: REQUEST_WATCHLIST_SUCCESS, payload: data })
+        )
+        .catch(error =>
+          dispatch({ type: REQUEST_WATCHLIST_FAILED, payload: error })
+        );
+    });
 };

@@ -25,3 +25,18 @@ export async function getAccountStatus(data) {
     alert(e);
   }
 }
+
+// Call to add or remove the movie from the watchList
+export async function addOrRemove(data) {
+  const { id, session_id, api } = data;
+  const body = data.body;
+  try {
+    let res = await axois.post(
+      `account/${id}/watchlist?api_key=${api}&session_id=${session_id}`,
+      body
+    );
+    return res.data;
+  } catch (e) {
+    alert(e);
+  }
+}
