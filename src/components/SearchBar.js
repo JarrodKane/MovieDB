@@ -11,7 +11,10 @@ const SearchBar = props => {
     onPWChange,
     onSearchChange,
     submitSearch,
-    errorData
+    errorData,
+    handleLogout,
+    isSignedIn,
+    searchFalse = true
   } = props;
 
   let errorMesg;
@@ -26,23 +29,42 @@ const SearchBar = props => {
   } else {
     errorMesg = "";
   }
+  let logBtn;
+  if (isSignedIn === false) {
+    logBtn = (
+      <button className="ui primary button" onClick={submitLogin}>
+        Login
+      </button>
+    );
+  } else {
+    logBtn = (
+      <button className="ui red button" onClick={handleLogout}>
+        Logout
+      </button>
+    );
+  }
 
   return (
     <div className="ui menu">
-      <div className="right item ">
-        <div className="ui icon  input">
-          <input
-            type="text"
-            placeholder="Search..."
-            value={search}
-            onChange={onSearchChange}
-          />
-          <i aria-hidden="true" className="search icon"></i>
+      {searchFalse ? (
+        <div className="right item ">
+          <div className="ui icon  input">
+            <input
+              type="text"
+              placeholder="Search..."
+              value={search}
+              onChange={onSearchChange}
+            />
+            <i aria-hidden="true" className="search icon"></i>
+          </div>
+          <button className="ui big button" onClick={submitSearch}>
+            Search
+          </button>
         </div>
-        <button className="ui big button" onClick={submitSearch}>
-          Search
-        </button>
-      </div>
+      ) : (
+        <div className="right item "></div>
+      )}
+
       <div className="Username ui  menu">
         {errorMesg}
         <div className="right item">
@@ -68,9 +90,7 @@ const SearchBar = props => {
               value={pw}
               onChange={onPWChange}
             />
-            <button className="ui button" onClick={submitLogin}>
-              Login
-            </button>
+            {logBtn}
           </div>
         </div>
       </div>

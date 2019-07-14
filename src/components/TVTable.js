@@ -1,7 +1,6 @@
 import React from "react";
 
 //TODO: Connect up arrows for pagnation
-
 const TVTable = props => {
   const { tvElements } = props;
   return (

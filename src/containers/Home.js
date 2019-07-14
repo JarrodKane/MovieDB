@@ -16,7 +16,8 @@ import {
   requestWatchList,
   requestAccountStates,
   requestAddOrRemoves,
-  deleteShow
+  deleteShow,
+  userLogout
 } from "../actions";
 
 //Mapping reduxProps
@@ -48,7 +49,8 @@ const mapDispatchToProps = dispatch => {
     onRequestState: data => dispatch(requestAccountStates(data)),
     onRequestWatchList: data => dispatch(requestWatchList(data)),
     onRequestAddOrRemove: data => dispatch(requestAddOrRemoves(data)),
-    onRemoveFromWatch: data => dispatch(deleteShow(data))
+    onRemoveFromWatch: data => dispatch(deleteShow(data)),
+    onLogout: () => dispatch(userLogout())
   };
 };
 
@@ -169,6 +171,18 @@ class Home extends React.Component {
     this.handleGetWatchList();
   };
 
+  //Logs the user out and grabs the popular tv shows to show
+  handleLogout = () => {
+    this.props.onLogout();
+    let data = {
+      api: this.props.api,
+      page: 1,
+      query: false
+    };
+
+    this.props.onRequestTV(data);
+  };
+
   //
   // -- RENDER --
   //
@@ -234,6 +248,8 @@ class Home extends React.Component {
           onSearchChange={onSearchChange}
           submitSearch={this.submitSearchClick}
           errorData={errorData}
+          handleLogout={this.handleLogout}
+          isSignedIn={isSignedIn}
         />
 
         <div className="ui container">

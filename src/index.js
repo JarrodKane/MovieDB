@@ -21,8 +21,8 @@ import {
 } from "./reducers";
 
 //Added redux logger in for debugging purposes
-const logger = createLogger();
-const rootReducer = combineReducers({
+//const logger = createLogger();
+const appReducer = combineReducers({
   setFields,
   requestToken,
   requestAccount,
@@ -32,10 +32,13 @@ const rootReducer = combineReducers({
   requestAddOrRemoves,
   addOrDelete
 });
-const store = createStore(
-  rootReducer,
-  applyMiddleware(thunkMiddleware, logger)
-);
+const rootReducer = (state, action) => {
+  if (action.type === "USER_LOGOUT") {
+    state = undefined;
+  }
+  return appReducer(state, action);
+};
+const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
 ReactDOM.render(
   <Provider store={store}>

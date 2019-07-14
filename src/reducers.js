@@ -24,20 +24,29 @@ import {
   REQUEST_ADDORREMOVE_SUCCESS,
   REQUEST_ADDORREMOVE_FAILED,
   ADD_TV,
-  REMOVE_TV,
+  ADD_OR_REMOVE,
   REQUEST_SEARCH_PENDING,
   REQUEST_SEARCH_SUCCESS,
   REQUEST_SEARCH_FAILED,
-  ERROR_NO_DATA
+  ERROR_NO_DATA,
+  USER_LOGOUT
 } from "./constants";
 
 // Setting inital state for the state
 const initialState = {
-  api: "9ccbc3e0393b7578cbf2eb8ae9f260c0",
-  un: "Harrod",
-  pw: "15Mackdog$",
+  un: "",
+  pw: "",
   search: "",
   error: ""
+};
+
+export const userLogout = (action = {}) => {
+  switch (action.type) {
+    case USER_LOGOUT:
+      return { USER_LOGOUT };
+    default:
+      return USER_LOGOUT;
+  }
 };
 
 export const setFields = (state = initialState, action = {}) => {
@@ -246,7 +255,7 @@ export const requestAddOrRemoves = (
 
 export const addOrDelete = (state = initialWatchList, action) => {
   switch (action.type) {
-    case REMOVE_TV:
+    case ADD_OR_REMOVE:
       //let tv_id = action.payload;
       return {
         ...state,

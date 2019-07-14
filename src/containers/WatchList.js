@@ -12,7 +12,8 @@ import {
   requestToken,
   requestTVShows,
   requestWatchList,
-  requestAddOrRemoves
+  requestAddOrRemoves,
+  userLogout
 } from "../actions";
 
 //Mapping reduxProps
@@ -40,7 +41,8 @@ const mapDispatchToProps = dispatch => {
     onRequestToken: data => dispatch(requestToken(data)),
     onRequestTV: data => dispatch(requestTVShows(data)),
     onRequestWatchList: data => dispatch(requestWatchList(data)),
-    onRequestAddOrRemove: data => dispatch(requestAddOrRemoves(data))
+    onRequestAddOrRemove: data => dispatch(requestAddOrRemoves(data)),
+    onLogout: () => dispatch(userLogout())
   };
 };
 
@@ -108,6 +110,17 @@ class WatchList extends React.Component {
     this.handleGetWatchList();
   };
 
+  handleLogout = () => {
+    this.props.onLogout();
+    let data = {
+      api: this.props.api,
+      page: 1,
+      query: false
+    };
+
+    this.props.onRequestTV(data);
+  };
+
   render() {
     const {
       onPWChange,
@@ -145,9 +158,6 @@ class WatchList extends React.Component {
             Please sign in to get your TV watchList
           </div>
           <div className="ui divider"></div>
-          <div className="ui divided items">
-            <TvShowWatchList />
-          </div>
         </div>
       );
     }
@@ -157,11 +167,12 @@ class WatchList extends React.Component {
         <SearchBar
           un={un}
           pw={pw}
-          search=""
           submitLogin={this.handleAuthenticate}
           onUNChange={onUNChange}
           onPWChange={onPWChange}
-          onSearchChange=""
+          handleLogout={this.handleLogout}
+          isSignedIn={isSignedIn}
+          searchFalse={false}
         />
         <div className="ui">
           <div className="ui container divided items watchListTable">

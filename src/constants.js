@@ -41,8 +41,7 @@ export const REQUEST_ADDORREMOVE_PENDING = "REQUEST_ADDORREMOVE_PENDING";
 export const REQUEST_ADDORREMOVE_SUCCESS = "REQUEST_ADDORREMOVE_SUCCESS,";
 export const REQUEST_ADDORREMOVE_FAILED = "REQUEST_ADDORREMOVE_FAILED";
 // Adding or removing movie  from watchList props
-export const ADD_TV = "ADD_TV";
-export const REMOVE_TV = "REMOVE_TV";
+export const ADD_OR_REMOVE = "ADD_OR_REMOVE";
 
 //Search for a tv show
 export const REQUEST_SEARCH_PENDING = "REQUEST_SEARCH_PENDING";
@@ -51,3 +50,6 @@ export const REQUEST_SEARCH_FAILED = "REQUEST_SEARCH_FAILED";
 
 //ERRORS
 export const ERROR_NO_DATA = "ERROR_NO_DATA";
+
+//Logout
+export const USER_LOGOUT = "USER_LOGOUT";
