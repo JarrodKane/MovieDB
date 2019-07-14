@@ -1,4 +1,5 @@
 import React from "react";
+import { Popup } from "semantic-ui-react";
 
 const SearchBar = props => {
   const {
@@ -9,8 +10,23 @@ const SearchBar = props => {
     onUNChange,
     onPWChange,
     onSearchChange,
-    submitSearch
+    submitSearch,
+    errorData
   } = props;
+
+  let errorMesg;
+  if (errorData === true) {
+    errorMesg = (
+      <Popup
+        trigger={<div icon="add" />}
+        open={true}
+        content="Fill in username or password"
+      />
+    );
+  } else {
+    errorMesg = "";
+  }
+
   return (
     <div className="ui menu">
       <div className="right item ">
@@ -28,6 +44,7 @@ const SearchBar = props => {
         </button>
       </div>
       <div className="Username ui  menu">
+        {errorMesg}
         <div className="right item">
           <div className="ui icon  input icon">
             <input
@@ -42,7 +59,7 @@ const SearchBar = props => {
           </div>
         </div>
         <div className="right item">
-          <div className="ui action input">
+          <div className="ui action input ">
             <input
               type="password"
               placeholder="Password"

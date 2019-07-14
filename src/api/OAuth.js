@@ -33,7 +33,9 @@ export async function createRequestToken(api, un, pw) {
     rtData = data;
     return rtData;
   } catch (e) {
-    alert(e);
+    alert(
+      `${e}\nverification failed: make sure your user name and password are correct`
+    );
   }
 }
 

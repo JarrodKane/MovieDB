@@ -28,13 +28,13 @@ const mapStateToProps = state => {
     isPending: state.requestToken.isPending,
     error: state.requestToken.error,
     requestToken: state.requestToken.requestToken,
-    session_id: state.requestToken.data.session_id,
     data: state.requestToken.data,
     api: state.requestToken.api,
     account: state.requestAccount.account,
     isSignedIn: state.requestAccount.isSignedIn,
     TVshows: state.requestTVShows.TVshows,
-    watchList: state.requestWatchList.watchList
+    watchList: state.requestWatchList.watchList,
+    errorData: state.requestAccount.errorData
   };
 };
 
@@ -72,7 +72,8 @@ class Home extends React.Component {
       this.props.onRequestTV(data);
     }
     if (isSignedIn) {
-      const { api, session_id, page = 1, sort = "created_at.asc" } = this.props;
+      const { api, page = 1, sort = "created_at.asc" } = this.props;
+      const { session_id } = this.props.data;
       const { id, iso_639_1 } = this.props.account;
       const data = {
         api: api,
@@ -109,7 +110,8 @@ class Home extends React.Component {
   };
 
   handleGetWatchList() {
-    const { api, session_id, page = 1, sort = "created_at.asc" } = this.props;
+    const { api, page = 1, sort = "created_at.asc" } = this.props;
+    const { session_id } = this.props.data;
     const { id, iso_639_1 } = this.props.account;
 
     const data = {
@@ -149,7 +151,8 @@ class Home extends React.Component {
     } else {
       addOrRemove = true;
     }
-    const { session_id, api } = this.props;
+    const { api } = this.props;
+    const { session_id } = this.props.data;
     const { id } = this.props.account;
 
     const data = {
@@ -180,7 +183,8 @@ class Home extends React.Component {
       search,
       isSignedIn,
       TVshows,
-      watchList
+      watchList,
+      errorData
     } = this.props;
 
     let tvElements;
@@ -229,6 +233,7 @@ class Home extends React.Component {
           onPWChange={onPWChange}
           onSearchChange={onSearchChange}
           submitSearch={this.submitSearchClick}
+          errorData={errorData}
         />
 
         <div className="ui container">

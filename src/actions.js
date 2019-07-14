@@ -28,7 +28,8 @@ import {
   REMOVE_TV,
   REQUEST_SEARCH_PENDING,
   REQUEST_SEARCH_SUCCESS,
-  REQUEST_SEARCH_FAILED
+  REQUEST_SEARCH_FAILED,
+  ERROR_NO_DATA
 } from "./constants";
 
 // Changing inputs
@@ -58,28 +59,37 @@ export const deleteShow = text => ({
 //Requesting for a request_token with api key
 
 export const requestToken = data => dispatch => {
-  let { api } = data;
-  dispatch({ type: REQUEST_RTOKEN_PENDING });
-  createRequestToken(data.api, data.un, data.pw)
-    .then(data => dispatch({ type: REQUEST_RTOKEN_SUCCESS, payload: data }))
-    .catch(error => dispatch({ type: REQUEST_RTOKEN_FAILED, payload: error }))
-    .then(res => {
-      dispatch({ type: REQUEST_ACC_PENDING, data });
-      let session_id = res.payload.session_id;
-      getAccDet(res.payload.api, res.payload.session_id)
-        .then(data => dispatch({ type: REQUEST_ACC_SUCCESS, payload: data }))
-        .catch(error => dispatch({ type: REQUEST_ACC_FAILED, payload: error }))
-        .then(res => {
-          dispatch({ type: REQUEST_WATCHLIST_PENDING, data });
-          getWatchList(api, session_id, res.payload)
-            .then(data =>
-              dispatch({ type: REQUEST_WATCHLIST_SUCCESS, payload: data })
-            )
-            .catch(error =>
-              dispatch({ type: REQUEST_WATCHLIST_FAILED, payload: error })
-            );
-        });
-    });
+  if (data.un === "" || data.pw === "") {
+    dispatch({ type: ERROR_NO_DATA });
+  } else {
+    let { api } = data;
+    dispatch({ type: REQUEST_RTOKEN_PENDING });
+    createRequestToken(data.api, data.un, data.pw)
+      .then(data => dispatch({ type: REQUEST_RTOKEN_SUCCESS, payload: data }))
+      .then(res => {
+        dispatch({ type: REQUEST_ACC_PENDING, data });
+        let session_id = res.payload.session_id;
+
+        getAccDet(res.payload.api, res.payload.session_id)
+          .then(data => dispatch({ type: REQUEST_ACC_SUCCESS, payload: data }))
+          .then(res => {
+            dispatch({ type: REQUEST_WATCHLIST_PENDING, data });
+            getWatchList(api, session_id, res.payload)
+              .then(data =>
+                dispatch({ type: REQUEST_WATCHLIST_SUCCESS, payload: data })
+              )
+              .catch(error =>
+                dispatch({ type: REQUEST_WATCHLIST_FAILED, payload: error })
+              );
+          })
+          .catch(error =>
+            dispatch({ type: REQUEST_ACC_FAILED, payload: error })
+          );
+      })
+      .catch(error =>
+        dispatch({ type: REQUEST_RTOKEN_FAILED, payload: error })
+      );
+  }
 };
 
 //Action to call the watchlist

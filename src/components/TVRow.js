@@ -18,7 +18,7 @@ const TVRow = props => {
   let addOrDis;
   if (isSignedIn === false) {
     addOrDis = (
-      <td id={id} className=" center aligned negative" onClick={handleClickAdd}>
+      <td id={id} className=" center aligned negative">
         <i id={id} aria-hidden="true" className="grey sign-in huge icon"></i>
         <div>Sign In</div>
       </td>

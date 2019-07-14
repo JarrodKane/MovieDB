@@ -23,7 +23,6 @@ const mapStateToProps = state => {
     isPending: state.requestToken.isPending,
     error: state.requestToken.error,
     requestToken: state.requestToken.requestToken,
-    session_id: state.requestToken.data.session_id,
     data: state.requestToken.data,
     api: state.requestToken.api,
     account: state.requestAccount.account,
@@ -67,7 +66,8 @@ class WatchList extends React.Component {
   };
 
   handleGetWatchList() {
-    const { api, session_id, page = 1, sort = "created_at.asc" } = this.props;
+    const { api, page = 1, sort = "created_at.asc" } = this.props;
+    const { session_id } = this.props.data;
     const { id, iso_639_1 } = this.props.account;
 
     const data = {
@@ -90,7 +90,8 @@ class WatchList extends React.Component {
     } else {
       addOrRemove = true;
     }
-    const { session_id, api } = this.props;
+    const { api } = this.props;
+    const { session_id } = this.props.data;
     const { id } = this.props.account;
 
     const data = {

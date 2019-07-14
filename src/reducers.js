@@ -27,7 +27,8 @@ import {
   REMOVE_TV,
   REQUEST_SEARCH_PENDING,
   REQUEST_SEARCH_SUCCESS,
-  REQUEST_SEARCH_FAILED
+  REQUEST_SEARCH_FAILED,
+  ERROR_NO_DATA
 } from "./constants";
 
 // Setting inital state for the state
@@ -62,12 +63,13 @@ const initialStateAuth = {
 export const requestToken = (state = initialStateAuth, action = {}) => {
   switch (action.type) {
     case REQUEST_RTOKEN_PENDING:
-      return Object.assign({}, state, { isPending: true });
+      return Object.assign({}, state, { isPending: true, errorData: false });
 
     case REQUEST_RTOKEN_SUCCESS:
       return Object.assign({}, state, {
         data: action.payload,
-        isPending: false
+        isPending: false,
+        errorData: false
       });
 
     case REQUEST_RTOKEN_FAILED:
@@ -85,25 +87,30 @@ const initialStateAccount = {
   isPending: true,
   error: "",
   account: [],
-  isSignedIn: false
+  isSignedIn: false,
+  errorData: false
 };
 
 export const requestAccount = (state = initialStateAccount, action = {}) => {
   switch (action.type) {
+    case ERROR_NO_DATA:
+      return Object.assign({}, state, { errorData: true });
     case REQUEST_ACC_PENDING:
-      return Object.assign({}, state, { isPending: true });
+      return Object.assign({}, state, { isPending: true, errorData: false });
 
     case REQUEST_ACC_SUCCESS:
       return Object.assign({}, state, {
         account: action.payload,
         isSignedIn: true,
-        isPending: false
+        isPending: false,
+        errorData: false
       });
 
     case REQUEST_ACC_FAILED:
       return Object.assign({}, state, {
         error: action.payload,
-        isPending: false
+        isPending: false,
+        errorData: false
       });
     default:
       return state;
@@ -184,29 +191,6 @@ export const requestWatchList = (state = initialWatchList, action = {}) => {
   }
 };
 
-/*
-export const requestTVSearch = (state = initialWatchList, action = {}) => {
-  switch (action.type) {
-    case REQUEST_SEARCH_PENDING:
-      return Object.assign({}, state, { isPending: true });
-
-    case REQUEST_SEARCH_SUCCESS:
-      return Object.assign({}, state, {
-        watchList: action.payload,
-        isPending: false
-      });
-
-    case REQUEST_SEARCH_FAILED:
-      return Object.assign({}, state, {
-        error: action.payload,
-        isPending: true
-      });
-    default:
-      return state;
-  }
-};
-*/
-
 //Gets back a status of if the movie is in the watchlist or not
 export const requestAccountStates = (state = initialStateTV, action = {}) => {
   switch (action.type) {
@@ -260,14 +244,6 @@ export const requestAddOrRemoves = (
   }
 };
 
-/*
-const initialWatchList = {
-  isPending: true,
-  error: "",
-  watchList: []
-};
-*/
-
 export const addOrDelete = (state = initialWatchList, action) => {
   switch (action.type) {
     case REMOVE_TV:
@@ -283,11 +259,3 @@ export const addOrDelete = (state = initialWatchList, action) => {
       return state;
   }
 };
-
-/*
-const initialWatchList = {
-  isPending: true,
-  error: "",
-  watchList: []
-};
-*/
