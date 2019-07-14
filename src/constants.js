@@ -43,3 +43,8 @@ export const REQUEST_ADDORREMOVE_FAILED = "REQUEST_ADDORREMOVE_FAILED";
 // Adding or removing movie  from watchList props
 export const ADD_TV = "ADD_TV";
 export const REMOVE_TV = "REMOVE_TV";
+
+//Search for a tv show
+export const REQUEST_SEARCH_PENDING = "REQUEST_SEARCH_PENDING";
+export const REQUEST_SEARCH_SUCCESS = "REQUEST_SEARCH_SUCCESS,";
+export const REQUEST_SEARCH_FAILED = "REQUEST_SEARCH_FAILED";

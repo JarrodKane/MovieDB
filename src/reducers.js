@@ -24,7 +24,10 @@ import {
   REQUEST_ADDORREMOVE_SUCCESS,
   REQUEST_ADDORREMOVE_FAILED,
   ADD_TV,
-  REMOVE_TV
+  REMOVE_TV,
+  REQUEST_SEARCH_PENDING,
+  REQUEST_SEARCH_SUCCESS,
+  REQUEST_SEARCH_FAILED
 } from "./constants";
 
 // Setting inital state for the state
@@ -133,6 +136,20 @@ export const requestTVShows = (state = initialStateTV, action = {}) => {
         error: action.payload,
         isPending: true
       });
+    case REQUEST_SEARCH_PENDING:
+      return Object.assign({}, state, { isPending: true });
+
+    case REQUEST_SEARCH_SUCCESS:
+      return Object.assign({}, state, {
+        watchList: action.payload,
+        isPending: false
+      });
+
+    case REQUEST_SEARCH_FAILED:
+      return Object.assign({}, state, {
+        error: action.payload,
+        isPending: true
+      });
     default:
       return state;
   }
@@ -161,10 +178,34 @@ export const requestWatchList = (state = initialWatchList, action = {}) => {
         error: action.payload,
         isPending: true
       });
+
     default:
       return state;
   }
 };
+
+/*
+export const requestTVSearch = (state = initialWatchList, action = {}) => {
+  switch (action.type) {
+    case REQUEST_SEARCH_PENDING:
+      return Object.assign({}, state, { isPending: true });
+
+    case REQUEST_SEARCH_SUCCESS:
+      return Object.assign({}, state, {
+        watchList: action.payload,
+        isPending: false
+      });
+
+    case REQUEST_SEARCH_FAILED:
+      return Object.assign({}, state, {
+        error: action.payload,
+        isPending: true
+      });
+    default:
+      return state;
+  }
+};
+*/
 
 //Gets back a status of if the movie is in the watchlist or not
 export const requestAccountStates = (state = initialStateTV, action = {}) => {
@@ -242,3 +283,11 @@ export const addOrDelete = (state = initialWatchList, action) => {
       return state;
   }
 };
+
+/*
+const initialWatchList = {
+  isPending: true,
+  error: "",
+  watchList: []
+};
+*/

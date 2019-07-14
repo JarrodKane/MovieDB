@@ -18,3 +18,18 @@ export async function getTVLatest(api, page = 1) {
     alert(e);
   }
 }
+
+export async function searchTV(data) {
+  const { api, search } = data;
+
+  try {
+    let res = await axois
+      .get(`/search/tv?api_key=${api}&language=en-US&query=${search}&page=1`)
+      .then(res => (data["TVshows"] = res.data));
+
+    console.log(res.results);
+    return res;
+  } catch (e) {
+    alert(e);
+  }
+}

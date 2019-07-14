@@ -24,6 +24,7 @@ const mapStateToProps = state => {
   return {
     un: state.setFields.un,
     pw: state.setFields.pw,
+    search: state.setFields.search,
     isPending: state.requestToken.isPending,
     error: state.requestToken.error,
     requestToken: state.requestToken.requestToken,
@@ -65,7 +66,8 @@ class Home extends React.Component {
     if (this.props.TVshows.length === 0) {
       let data = {
         api: this.props.api,
-        page: 1
+        page: 1,
+        query: false
       };
       this.props.onRequestTV(data);
     }
@@ -99,7 +101,8 @@ class Home extends React.Component {
       api: this.props.api,
       un: this.props.un,
       pw: this.props.pw,
-      page: 1
+      page: 1,
+      query: false
     };
     this.props.onRequestToken(data); // Calling the onRequestToken and passing in the api key that was just grabbed
     this.props.onRequestTV(data);
@@ -115,10 +118,25 @@ class Home extends React.Component {
       id: id,
       sort: sort,
       page: page,
-      iso_639_1: iso_639_1
+      iso_639_1: iso_639_1,
+      query: false
     };
     this.props.onRequestWatchList(data);
   }
+
+  submitSearchClick = () => {
+    const { api } = this.props;
+    const search = this.props.search;
+
+    const data = {
+      api: api,
+      page: 1,
+      search: search,
+      query: true
+    };
+
+    this.props.onRequestTV(data);
+  };
 
   //This will get take the id from the event, passs it in with the users account, and either apply or remove it from the watchList
   // Change the css to red rather than recalling the watchlist
@@ -210,6 +228,7 @@ class Home extends React.Component {
           onUNChange={onUNChange}
           onPWChange={onPWChange}
           onSearchChange={onSearchChange}
+          submitSearch={this.submitSearchClick}
         />
 
         <div className="ui container">

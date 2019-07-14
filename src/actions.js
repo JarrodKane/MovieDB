@@ -1,6 +1,6 @@
 import axois from "./api/TheMovieDB";
 import { createRequestToken, getAccDet } from "./api/OAuth";
-import { getTVLatest } from "./api/TVshows";
+import { getTVLatest, searchTV } from "./api/TVshows";
 import { getAccountStatus, getWatchList, addOrRemove } from "./api/UserFun";
 import {
   CHANGE_SEARCH_FIELD,
@@ -25,7 +25,10 @@ import {
   REQUEST_ADDORREMOVE_SUCCESS,
   REQUEST_ADDORREMOVE_FAILED,
   ADD_TV,
-  REMOVE_TV
+  REMOVE_TV,
+  REQUEST_SEARCH_PENDING,
+  REQUEST_SEARCH_SUCCESS,
+  REQUEST_SEARCH_FAILED
 } from "./constants";
 
 // Changing inputs
@@ -81,7 +84,6 @@ export const requestToken = data => dispatch => {
 
 //Action to call the watchlist
 export const requestWatchList = data => dispatch => {
-  console.log("IS CLLAED");
   dispatch({ type: REQUEST_WATCHLIST_PENDING });
   getWatchList(data.api, data.session_id, data)
     .then(data => dispatch({ type: REQUEST_WATCHLIST_SUCCESS, payload: data }))
@@ -90,13 +92,23 @@ export const requestWatchList = data => dispatch => {
     );
 };
 
-//Set the account details for the account sign in
-
 export const requestTVShows = data => dispatch => {
-  dispatch({ type: REQUEST_TV_PENDING });
-  getTVLatest(data.api, data.page)
-    .then(data => dispatch({ type: REQUEST_TV_SUCCESS, payload: data }))
-    .catch(error => dispatch({ type: REQUEST_TV_FAILED, payload: error }));
+  if (data.query === true && data.search !== "") {
+    console.log("CALLED");
+
+    dispatch({ type: REQUEST_TV_PENDING });
+    searchTV(data)
+      .then(data => dispatch({ type: REQUEST_TV_SUCCESS, payload: data }))
+      .catch(error => dispatch({ type: REQUEST_TV_FAILED, payload: error }));
+  } else if (data.query === true && data.search === "") {
+    //Does nothing
+  } else {
+    console.log("IS CLLAED");
+    dispatch({ type: REQUEST_TV_PENDING });
+    getTVLatest(data.api, data.page)
+      .then(data => dispatch({ type: REQUEST_TV_SUCCESS, payload: data }))
+      .catch(error => dispatch({ type: REQUEST_TV_FAILED, payload: error }));
+  }
 };
 
 //Action to call to see if the tv show is in the watchlist

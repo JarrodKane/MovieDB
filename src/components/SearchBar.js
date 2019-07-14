@@ -8,15 +8,24 @@ const SearchBar = props => {
     submitLogin,
     onUNChange,
     onPWChange,
-    onSearchChange
+    onSearchChange,
+    submitSearch
   } = props;
   return (
     <div className="ui menu">
       <div className="right item ">
-        <div className="ui big  icon  input">
-          <input type="text" placeholder="Search..." />
+        <div className="ui icon  input">
+          <input
+            type="text"
+            placeholder="Search..."
+            value={search}
+            onChange={onSearchChange}
+          />
           <i aria-hidden="true" className="search icon"></i>
         </div>
+        <button className="ui big button" onClick={submitSearch}>
+          Search
+        </button>
       </div>
       <div className="Username ui  menu">
         <div className="right item">
