@@ -10,7 +10,7 @@ import WatchList from "../containers/WatchList";
 
 function AppRouter() {
   return (
-    <Router>
+    <Router basename="/MovieDB">
       <div>
         <nav className="ui  pointing secondary menu container ">
           <NavLink className=" item" exact to="/" activeClassName="active">
