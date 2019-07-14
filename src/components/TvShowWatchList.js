@@ -42,7 +42,11 @@ const TvShowWatchList = props => {
 
           <div className="description">{desc}</div>
           <div className="extra">
-            <button id={id} className="ui primary button">
+            <button
+              id={`R-${id}`}
+              onClick={handleClickAdd}
+              className="ui primary button"
+            >
               Remove From List
               <i aria-hidden="true" className="right chevron icon"></i>
             </button>

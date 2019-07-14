@@ -11,7 +11,8 @@ import {
   setSearchField,
   requestToken,
   requestTVShows,
-  requestWatchList
+  requestWatchList,
+  requestAddOrRemoves
 } from "../actions";
 
 //Mapping reduxProps
@@ -39,7 +40,8 @@ const mapDispatchToProps = dispatch => {
     onSearchChange: event => dispatch(setSearchField(event.target.value)),
     onRequestToken: data => dispatch(requestToken(data)),
     onRequestTV: data => dispatch(requestTVShows(data)),
-    onRequestWatchList: data => dispatch(requestWatchList(data))
+    onRequestWatchList: data => dispatch(requestWatchList(data)),
+    onRequestAddOrRemove: data => dispatch(requestAddOrRemoves(data))
   };
 };
 
@@ -79,6 +81,32 @@ class WatchList extends React.Component {
     this.props.onRequestWatchList(data);
   }
 
+  handleClickAdd = e => {
+    let arr = e.target.id.split("-");
+    let tv_id = arr[1];
+    let addOrRemove;
+    if (arr[0] === "R") {
+      addOrRemove = false;
+    } else {
+      addOrRemove = true;
+    }
+    const { session_id, api } = this.props;
+    const { id } = this.props.account;
+
+    const data = {
+      api: api,
+      session_id: session_id,
+      id: id,
+      body: {
+        media_type: "tv",
+        media_id: tv_id,
+        watchlist: addOrRemove
+      }
+    };
+    this.props.onRequestAddOrRemove(data);
+    this.handleGetWatchList();
+  };
+
   render() {
     const {
       onPWChange,
@@ -105,6 +133,7 @@ class WatchList extends React.Component {
             rate={show.vote_average}
             lang={show.original_language}
             desc={show.overview}
+            handleClickAdd={this.handleClickAdd}
           />
         ));
       }
@@ -134,7 +163,7 @@ class WatchList extends React.Component {
           onSearchChange=""
         />
         <div className="ui">
-          <div className="ui divided items watchListTable">
+          <div className="ui container divided items watchListTable">
             {watchlistTable}
           </div>
         </div>

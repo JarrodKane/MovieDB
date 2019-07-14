@@ -146,9 +146,6 @@ class Home extends React.Component {
     };
     this.props.onRequestAddOrRemove(data);
     this.handleGetWatchList();
-    //*if (addOrRemove === false) {
-    // this.props.onRemoveFromWatch(tv_id);
-    //}
   };
 
   //

@@ -24,18 +24,39 @@ const TVRow = props => {
       </td>
     );
   } else {
+    // This is for before there is an array of watchlists returned
     if (watchList.length === 0) {
       addOrDis = (
-        <td id={id} className=" center aligned negative">
-          <i id={id} aria-hidden="true" className="grey sign-in huge icon"></i>
-          <div>Sign In</div>
+        <td
+          id={`A-${id}`}
+          className="selectable center aligned  huge icon "
+          onClick={handleClickAdd}
+        >
+          <i
+            id={`A-${id}`}
+            aria-hidden="true"
+            className="grey heart huge icon"
+          ></i>
         </td>
       );
-      //call watchlist, to map through an compare
+      // This is for if there is an array returned but there are no movies in the watchlist yet
+    } else if (watchList.results.length === 0) {
+      console.log(watchList);
+      addOrDis = (
+        <td
+          id={`A-${id}`}
+          className="selectable center aligned  huge icon "
+          onClick={handleClickAdd}
+        >
+          <i
+            id={`A-${id}`}
+            aria-hidden="true"
+            className="grey heart huge icon"
+          ></i>
+        </td>
+      );
     } else {
-      //TODO: Need to change to a while loop to run at least once even if no result
       let watchListS = watchList.results;
-
       for (let i = 0; i < watchListS.length; i++) {
         if (watchListS[i].id === id) {
           addOrDis = (
