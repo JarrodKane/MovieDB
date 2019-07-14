@@ -159,6 +159,7 @@ class Home extends React.Component {
       onSearchChange,
       un,
       pw,
+      search,
       isSignedIn,
       TVshows,
       watchList
@@ -204,11 +205,11 @@ class Home extends React.Component {
         <SearchBar
           un={un}
           pw={pw}
-          search=""
+          search={search}
           submitLogin={this.handleAuthenticate}
           onUNChange={onUNChange}
           onPWChange={onPWChange}
-          onSearchChange=""
+          onSearchChange={onSearchChange}
         />
 
         <div className="ui container">

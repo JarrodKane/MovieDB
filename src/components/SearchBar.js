@@ -11,35 +11,44 @@ const SearchBar = props => {
     onSearchChange
   } = props;
   return (
-    <form className="Username ui  menu" onSubmit={submitLogin}>
-      <div className="right item">
-        <div className="ui icon  input icon">
-          <input
-            type="text"
-            placeholder="Username"
-            id="un"
-            name="un"
-            value={un}
-            onChange={onUNChange}
-          />
-          <i aria-hidden="true" className="user icon"></i>
+    <div className="ui menu">
+      <div className="right item ">
+        <div className="ui big  icon  input">
+          <input type="text" placeholder="Search..." />
+          <i aria-hidden="true" className="search icon"></i>
         </div>
       </div>
-
-      <div className="right item">
-        <div className="ui action input">
-          <input
-            type="password"
-            placeholder="Password"
-            id="pw"
-            name="pw"
-            value={pw}
-            onChange={onPWChange}
-          />
-          <button className="ui button">Login</button>
+      <div className="Username ui  menu">
+        <div className="right item">
+          <div className="ui icon  input icon">
+            <input
+              type="text"
+              placeholder="Username"
+              id="un"
+              name="un"
+              value={un}
+              onChange={onUNChange}
+            />
+            <i aria-hidden="true" className="user icon"></i>
+          </div>
+        </div>
+        <div className="right item">
+          <div className="ui action input">
+            <input
+              type="password"
+              placeholder="Password"
+              id="pw"
+              name="pw"
+              value={pw}
+              onChange={onPWChange}
+            />
+            <button className="ui button" onClick={submitLogin}>
+              Login
+            </button>
+          </div>
         </div>
       </div>
-    </form>
+    </div>
   );
 };
 
