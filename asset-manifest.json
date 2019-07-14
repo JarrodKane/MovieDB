@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/movie_db/static/css/main.a8aa7b17.chunk.css",
+    "main.js": "/movie_db/static/js/main.2fa7f7e5.chunk.js",
+    "main.js.map": "/movie_db/static/js/main.2fa7f7e5.chunk.js.map",
+    "runtime~main.js": "/movie_db/static/js/runtime~main.936db568.js",
+    "runtime~main.js.map": "/movie_db/static/js/runtime~main.936db568.js.map",
+    "static/css/2.e6aeb8ab.chunk.css": "/movie_db/static/css/2.e6aeb8ab.chunk.css",
+    "static/js/2.bf57c4a1.chunk.js": "/movie_db/static/js/2.bf57c4a1.chunk.js",
+    "static/js/2.bf57c4a1.chunk.js.map": "/movie_db/static/js/2.bf57c4a1.chunk.js.map",
+    "index.html": "/movie_db/index.html",
+    "precache-manifest.f9823705c5b0eba34a6e8cd184f8e854.js": "/movie_db/precache-manifest.f9823705c5b0eba34a6e8cd184f8e854.js",
+    "service-worker.js": "/movie_db/service-worker.js",
+    "static/css/2.e6aeb8ab.chunk.css.map": "/movie_db/static/css/2.e6aeb8ab.chunk.css.map",
+    "static/css/main.a8aa7b17.chunk.css.map": "/movie_db/static/css/main.a8aa7b17.chunk.css.map",
+    "static/media/semantic.min.css": "/movie_db/static/media/outline-icons.ef60a4f6.woff"
+  }
+}
