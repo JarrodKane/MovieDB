@@ -13,7 +13,7 @@ function AppRouter() {
     <Router basename="/MovieDB">
       <div>
         <nav className="ui  pointing secondary menu container ">
-          <NavLink className=" item" exact to="/" activeClassName="active">
+          <NavLink className=" item" to="/" activeClassName="active">
             Home
           </NavLink>
 
@@ -21,7 +21,7 @@ function AppRouter() {
             Watch List
           </NavLink>
         </nav>
-        <Route as={NavLink} path="/" exact component={Home} />
+        <Route as={NavLink} exact path="/" exact component={Home} />
         <Route as={NavLink} path="/watch_list/" component={WatchList} />
       </div>
     </Router>
