@@ -43,6 +43,7 @@ You will need Node and NPM installed
    2. Enter
    3. Yes
    4. Enter
+   5. Enter
 7. To start the project run `npm start`
 8. The server should be on port `http://localhost:3000/`, go to a browser and enter that in
 9. Sign into the site with your username and password
