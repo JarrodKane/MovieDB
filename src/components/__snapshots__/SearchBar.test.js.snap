@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header should render correctly with no props 1`] = `
+<div
+  className="ui menu"
+>
+  <div
+    className="right item "
+  >
+    <div
+      className="ui icon  input"
+    >
+      <input
+        placeholder="Search..."
+        type="text"
+      />
+      <i
+        aria-hidden="true"
+        className="search icon"
+      />
+    </div>
+    <button
+      className="ui big button"
+    >
+      Search
+    </button>
+  </div>
+  <div
+    className="Username ui  menu"
+  >
+    <div
+      className="right item"
+    >
+      <div
+        className="ui icon  input icon"
+      >
+        <input
+          id="un"
+          name="un"
+          placeholder="Username"
+          type="text"
+        />
+        <i
+          aria-hidden="true"
+          className="user icon"
+        />
+      </div>
+    </div>
+    <div
+      className="right item"
+    >
+      <div
+        className="ui action input "
+      >
+        <input
+          id="pw"
+          name="pw"
+          placeholder="Password"
+          type="password"
+        />
+        <button
+          className="ui red button"
+        >
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;

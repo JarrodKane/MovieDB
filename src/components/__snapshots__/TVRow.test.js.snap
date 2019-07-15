@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TVRow should render correctly with a year prop, and a watchList prop 1`] = `
+<tr
+  className=""
+>
+  <td
+    className=""
+  >
+    <img
+      alt="Poster of undefined"
+      className="ui small image "
+      src="https://image.tmdb.org/t/p/w500/undefined"
+    />
+  </td>
+  <td
+    className="ui medium header"
+  />
+  <td
+    className=""
+  >
+    2000
+  </td>
+  <td
+    className=""
+  >
+    NaN%
+  </td>
+  <td
+    className=""
+  />
+  <td
+    className="selectable center aligned  huge icon "
+    id="A-undefined"
+  >
+    <i
+      aria-hidden="true"
+      className="grey heart huge icon"
+      id="A-undefined"
+    />
+  </td>
+</tr>
+`;
