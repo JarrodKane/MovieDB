@@ -7,7 +7,7 @@ const TVTable = props => {
     <table className="ui celled padded table  ">
       <thead className="">
         <tr className="">
-          <th className="ui medium header">Cover</th>
+          <th className="ui medium header ">Cover</th>
           <th className="ui medium header">Title</th>
           <th className="ui medium header">Year</th>
           <th className="ui medium header">Average</th>

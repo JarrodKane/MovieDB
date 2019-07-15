@@ -45,7 +45,7 @@ const SearchBar = props => {
   }
 
   return (
-    <div className="ui menu">
+    <div className="ui stackable menu">
       {searchFalse ? (
         <div className="right item ">
           <div className="ui icon  input">
@@ -65,7 +65,7 @@ const SearchBar = props => {
         <div className="right item "></div>
       )}
 
-      <div className="Username ui  menu">
+      <div className="Username ui stackable menu">
         {errorMesg}
         <div className="right item">
           <div className="ui icon  input icon">
