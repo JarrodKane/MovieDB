@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  NavLink
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import Home from "../containers/Home";
 import WatchList from "../containers/WatchList";
 
@@ -21,7 +16,7 @@ function AppRouter() {
             Watch List
           </NavLink>
         </nav>
-        <Route as={NavLink} exact path="/" exact component={Home} />
+        <Route as={NavLink} exact path="/" component={Home} />
         <Route as={NavLink} path="/watch_list/" component={WatchList} />
       </div>
     </Router>

@@ -1,11 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
+import "./styles/index.css";
 //SEMANTIC-UI-REACT for css and some compoennts
 import "semantic-ui-css/semantic.min.css";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, combineReducers } from "redux";
-import { createLogger } from "redux-logger";
+//import { createLogger } from "redux-logger";
 import thunkMiddleware from "redux-thunk";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
@@ -18,7 +18,7 @@ import {
   requestAccountStates,
   requestAddOrRemoves,
   addOrDelete
-} from "./reducers";
+} from "./state/reducers";
 
 //Added redux logger in for debugging purposes
 //const logger = createLogger();

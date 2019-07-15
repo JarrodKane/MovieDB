@@ -1,7 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
+
+//Styles
+import "../styles/WatchList.css";
+//Components
 import TvShowWatchList from "../components/TvShowWatchList";
-import "./WatchList.css";
 import SearchBar from "../components/SearchBar";
 
 //Importing redux actions
@@ -14,7 +17,7 @@ import {
   requestWatchList,
   requestAddOrRemoves,
   userLogout
-} from "../actions";
+} from "../state/actions";
 
 //Mapping reduxProps
 const mapStateToProps = state => {
@@ -125,7 +128,6 @@ class WatchList extends React.Component {
     const {
       onPWChange,
       onUNChange,
-      onSearchChange,
       un,
       pw,
       watchList,

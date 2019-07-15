@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import "./Home.css";
+import "../styles/Home.css";
 // Components
 import TVTable from "../components/TVTable";
 import SearchBar from "../components/SearchBar";
@@ -18,7 +18,7 @@ import {
   requestAddOrRemoves,
   deleteShow,
   userLogout
-} from "../actions";
+} from "../state/actions";
 
 //Mapping reduxProps
 const mapStateToProps = state => {

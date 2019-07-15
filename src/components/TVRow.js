@@ -12,7 +12,9 @@ const TVRow = props => {
     isSignedIn,
     watchList
   } = props;
-  const percentageRating = rate * 10;
+
+  const yearOnly = year.slice(0, 4);
+  const percentageRating = Math.round(rate * 10);
   const Poster = `https://image.tmdb.org/t/p/w500/${image}`;
 
   let addOrDis;
@@ -102,7 +104,7 @@ const TVRow = props => {
         />
       </td>
       <td className="ui medium header">{name}</td>
-      <td className="">{year}</td>
+      <td className="">{yearOnly}</td>
       <td className="">{`${percentageRating}%`}</td>
       <td className="">{lang}</td>
 

@@ -8,7 +8,7 @@ export async function getTVLatest(api, page = 1) {
       TVshows: ""
     };
 
-    let res = await axois
+    await axois
       .get(`tv/popular?api_key=${api}&language=en-US&page=${page}`)
       .then(res => (data["TVshows"] = res.data));
 

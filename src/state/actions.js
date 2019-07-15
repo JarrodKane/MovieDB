@@ -1,7 +1,6 @@
-import axois from "./api/TheMovieDB";
-import { createRequestToken, getAccDet } from "./api/OAuth";
-import { getTVLatest, searchTV } from "./api/TVshows";
-import { getAccountStatus, getWatchList, addOrRemove } from "./api/UserFun";
+import { createRequestToken, getAccDet } from "../api/OAuth";
+import { getTVLatest, searchTV } from "../api/TVshows";
+import { getAccountStatus, getWatchList, addOrRemove } from "../api/UserFun";
 import {
   CHANGE_SEARCH_FIELD,
   CHANGE_USERNAME_FIELD,
@@ -27,7 +26,7 @@ import {
   ADD_OR_REMOVE,
   ERROR_NO_DATA,
   USER_LOGOUT
-} from "./constants";
+} from "../constants/constants";
 
 // Changing inputs
 export const setUserNameField = text => ({
