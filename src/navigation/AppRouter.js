@@ -8,7 +8,7 @@ function AppRouter() {
     <Router basename="/MovieDB">
       <div>
         <nav className="ui  pointing secondary menu container ">
-          <NavLink className=" item" to="/" activeClassName="active">
+          <NavLink className=" item" exact to="/" activeClassName="active">
             Home
           </NavLink>
 

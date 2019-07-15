@@ -65,6 +65,7 @@ Imports are to be
 - [ ] Clean up functions into helper file for reusable tools
 - [ ] JEST & Enzyme
 - [ ] Clean up unused functions
+- [ ] Add in guideline on how to write new code
 - [ ] Stop a sign in from removing what tv search you were looking at
 - [ ] Ability to sort watchList and returned TV shows
 - [ ] Ability to change pages, from returned TV shows
