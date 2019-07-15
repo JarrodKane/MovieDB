@@ -11,7 +11,7 @@ exports[`TVTable should render correctly with no props 1`] = `
       className=""
     >
       <th
-        className="ui medium header"
+        className="ui medium header "
       >
         Cover
       </th>

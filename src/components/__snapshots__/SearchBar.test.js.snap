@@ -2,7 +2,7 @@
 
 exports[`Header should render correctly with no props 1`] = `
 <div
-  className="ui menu"
+  className="ui stackable menu"
 >
   <div
     className="right item "
@@ -26,7 +26,7 @@ exports[`Header should render correctly with no props 1`] = `
     </button>
   </div>
   <div
-    className="Username ui  menu"
+    className="Username ui stackable menu"
   >
     <div
       className="right item"
