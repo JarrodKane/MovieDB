@@ -79,6 +79,8 @@ Imports are to be
 - [Semantic-UI](https://github.com/Semantic-Org/Semantic-UI-React)
 - [AXIOS](https://github.com/axios/axios)
 
+
+___
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
