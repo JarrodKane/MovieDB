@@ -43,6 +43,7 @@ You will need Node and NPM installed
    2. Enter
    3. Yes
    4. Enter
+   5. Enter
 7. To start the project run `npm start`
 8. The server should be on port `http://localhost:3000/`, go to a browser and enter that in
 9. Sign into the site with your username and password
@@ -62,17 +63,23 @@ Imports are to be
 
 - [x] Organise Redux into state folder
 - [x] Organise CSS into styles folder
+- [x] Fix year to only return year not entire date for tv list
+- [x] Fix floating point return on movie precentage
+- [ ] JEST Snapshot testing
+- [ ] Enzyme
 - [ ] Clean up functions into helper file for reusable tools
+<<<<<<< HEAD
 - [ ] JEST & Enzyme
 - [ ] Clean up unused functions
 - [ ] Add in guideline on how to write new code
+=======
+>>>>>>> a28ec5a5289dbf084e2dc7765abdd5f043a7468d
 - [ ] Stop a sign in from removing what tv search you were looking at
 - [ ] Ability to sort watchList and returned TV shows
 - [ ] Ability to change pages, from returned TV shows
 - [ ] CSS theme
-- [ ] For language display English not just En
-- [x] Fix year to only return year not entire date for tv list
-- [x] Fix floating point return on movie precentage
+- [ ] For language display have it show "English" not just "En"
+
 
 ## Built With
 
@@ -80,6 +87,10 @@ Imports are to be
 - [Semantic-UI](https://github.com/Semantic-Org/Semantic-UI-React)
 - [AXIOS](https://github.com/axios/axios)
 
+
+
+___
+___
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
