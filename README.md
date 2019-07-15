@@ -1,3 +1,75 @@
+# Movie DB
+React based movie db using redux, and pulling from The MovieDB(TMDb).
+This allows you to sign in with your TMDb user, and search through TV shows, you can also add/remove these shows to a watchlist.
+You can manage your watchlist from a watchlist page once singed in.
+
+This project can be found running on GH pages via [MovieDB](https://trojincat.github.io/MovieDB/)
+___
+```
+|-- dist                    build artifacts (not in version control)
+|-- public                  static files to be deployed (in version control)
+|-- scripts                 bash scripts
+|-- src
+    |-- api                 interface for all API calls to TMDb
+    |-- components          React components
+    |-- containers          "smart" React components
+    |-- navigation          contains reactRouter
+    |-- .eslintrc           contains eslintrc rules
+    |-- actions.js          contains redux actions
+    |-- app.js              root React component
+    |-- index.js            app entry point
+    |-- index.hbs           Handlebars HTML template
+|-- constants.js            Constants
+|-- constants.js            Constants
+    
+```
+___
+## HOW TO SETUP
+You will need Node and NPM installed
+1. A TMBd user is needed to  test the application [Sign up for user](https://www.themoviedb.org/)
+2. Sign up and grab an API key
+3. Clone this repo `git clone https://github.com/TrojinCat/MovieDB.git`
+4. Move into MovieDB directory
+5. Run `npm install`
+6. Semantic-UI will ask a few questions
+   1. Enter
+   2. Enter
+   3. Yes
+   4. Enter
+7. To start the project run `npm start`
+8. The server should be on port `http://localhost:3000/`, go to a browser and enter that in
+8. Sign into the site with your username and password
+
+
+## Writing new code
+Inline exports of functions
+* Tab =to 2 spaces
+
+
+Imports are to be
+* Node Modules
+* Local Modules
+
+### TODO:
+- [ ] Organise Redux into state folder
+- [ ] Organise CSS into styles folder
+- [ ] Clean up functions into helper file for reusable tools
+- [ ] JEST & Enzyme
+- [ ] Clean up unused functions
+- [ ] Ability to sort watchList and returned TV shows
+- [ ] Ability to change pages, from returned TV shows
+- [ ] CSS theme
+- [ ] Fix floating point return on movie precentage
+
+
+## Built With
+* [Create React App](https://github.com/facebook/create-react-app)
+* [Semantic-UI](https://github.com/Semantic-Org/Semantic-UI-React) 
+* [AXIOS](https://github.com/axios/axios)
+
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
