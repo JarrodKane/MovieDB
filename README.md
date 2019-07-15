@@ -63,16 +63,17 @@ Imports are to be
 
 - [x] Organise Redux into state folder
 - [x] Organise CSS into styles folder
+- [x] Fix year to only return year not entire date for tv list
+- [x] Fix floating point return on movie precentage
+- [ ] JEST Snapshot testing
+- [ ] Enzyme
 - [ ] Clean up functions into helper file for reusable tools
-- [ ] JEST & Enzyme
-- [ ] Clean up unused functions
 - [ ] Stop a sign in from removing what tv search you were looking at
 - [ ] Ability to sort watchList and returned TV shows
 - [ ] Ability to change pages, from returned TV shows
 - [ ] CSS theme
-- [ ] For language display English not just En
-- [x] Fix year to only return year not entire date for tv list
-- [x] Fix floating point return on movie precentage
+- [ ] For language display have it show "English" not just "En"
+
 
 ## Built With
 
@@ -81,6 +82,8 @@ Imports are to be
 - [AXIOS](https://github.com/axios/axios)
 
 
+
+___
 ___
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
