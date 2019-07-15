@@ -74,13 +74,9 @@ Imports are to be
 - [x] Fix year to only return year not entire date for tv list
 - [x] Fix floating point return on movie precentage
 - [x] JEST Snapshots
-- [ ] Enzyme and testing
+- [ ] Enzyme testing
 - [ ] Clean up functions into helper file for reusable tools
-      <<<<<<< HEAD
-- [ ] JEST & Enzyme
-- [ ] Clean up unused functions
-- [ ] # Add in guideline on how to write new code
-  > > > > > > > a28ec5a5289dbf084e2dc7765abdd5f043a7468d
+- [ ] Add in guideline on how to write new code
 - [ ] Stop a sign in from removing what tv search you were looking at
 - [ ] Ability to sort watchList and returned TV shows
 - [ ] Ability to change pages, from returned TV shows
