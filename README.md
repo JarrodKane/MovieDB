@@ -76,13 +76,15 @@ Imports are to be
 - [x] JEST Snapshots
 - [ ] Enzyme testing
 - [x] Fix LoginBar
-- [ ] Mobile responsive css fix
+- [x] Mobile login css fix
 - [ ] Clean up functions into helper file for reusable tools
 - [ ] Add in guideline on how to write new code
 - [ ] Stop a sign in from removing what tv search you were looking at
 - [ ] Ability to sort watchList and returned TV shows
-- [ ] Ability to change pages, from returned TV shows
+- [x] Ability to change pages, from returned TV shows
+- [ ] Ability to change pages with number selection
 - [ ] CSS theme
+- [ ] Responsive mobile css
 - [ ] For language display have it show "English" not just "En"
 
 ## Built With

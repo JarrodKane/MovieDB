@@ -128,18 +128,34 @@ class Home extends React.Component {
     this.props.onRequestWatchList(data);
   }
 
-  submitSearchClick = () => {
+  submitSearchClick = (page = 1) => {
     const { api } = this.props;
     const search = this.props.search;
 
     const data = {
       api: api,
-      page: 1,
+      page: page,
       search: search,
       query: true
     };
 
     this.props.onRequestTV(data);
+  };
+
+  handleClickNext = () => {
+    let { page, total_pages } = this.props.TVshows;
+    if (page < total_pages) {
+      page++;
+      this.submitSearchClick(page);
+    }
+  };
+
+  handleClickPrevious = () => {
+    let { page } = this.props.TVshows;
+    if (page > 1) {
+      page--;
+      this.submitSearchClick(page);
+    }
   };
 
   //This will get take the id from the event, passs it in with the users account, and either apply or remove it from the watchList
@@ -253,7 +269,11 @@ class Home extends React.Component {
         />
 
         <div className="ui container">
-          <TVTable tvElements={tvElements} />
+          <TVTable
+            tvElements={tvElements}
+            tvNext={this.handleClickNext}
+            tvPrevious={this.handleClickPrevious}
+          />
         </div>
       </div>
     );

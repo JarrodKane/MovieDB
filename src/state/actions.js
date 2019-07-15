@@ -110,7 +110,10 @@ export const requestTVShows = data => dispatch => {
       .then(data => dispatch({ type: REQUEST_TV_SUCCESS, payload: data }))
       .catch(error => dispatch({ type: REQUEST_TV_FAILED, payload: error }));
   } else if (data.query === true && data.search === "") {
-    //Does nothing
+    dispatch({ type: REQUEST_TV_PENDING });
+    getTVLatest(data.api, data.page)
+      .then(data => dispatch({ type: REQUEST_TV_SUCCESS, payload: data }))
+      .catch(error => dispatch({ type: REQUEST_TV_FAILED, payload: error }));
   } else {
     dispatch({ type: REQUEST_TV_PENDING });
     getTVLatest(data.api, data.page)

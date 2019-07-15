@@ -20,14 +20,15 @@ export async function getTVLatest(api, page = 1) {
 }
 
 export async function searchTV(data) {
-  const { api, search } = data;
+  const { api, search, page = 1 } = data;
 
   try {
     let res = await axois
-      .get(`/search/tv?api_key=${api}&language=en-US&query=${search}&page=1`)
+      .get(
+        `/search/tv?api_key=${api}&language=en-US&query=${search}&page=${page}`
+      )
       .then(res => (data["TVshows"] = res.data));
 
-    console.log(res.results);
     return res;
   } catch (e) {
     alert(e);

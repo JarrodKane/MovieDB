@@ -2,7 +2,8 @@ import React from "react";
 
 //TODO: Connect up arrows for pagnation
 const TVTable = props => {
-  const { tvElements } = props;
+  const { tvElements, tvNext, tvPrevious } = props;
+
   return (
     <table className="ui celled padded table  ">
       <thead className="">
@@ -20,10 +21,10 @@ const TVTable = props => {
         <tr className="">
           <th colSpan="6" className="">
             <div className="ui pagination right floated menu">
-              <div className="icon item">
+              <div className="icon item" onClick={tvPrevious}>
                 <i aria-hidden="true" className="chevron left icon"></i>
               </div>
-              <div className="icon item">
+              <div className="icon item" onClick={tvNext}>
                 <i aria-hidden="true" className="chevron right icon"></i>
               </div>
             </div>
