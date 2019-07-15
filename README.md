@@ -80,6 +80,7 @@ Imports are to be
 - [ ] Clean up functions into helper file for reusable tools
 - [ ] Add in guideline on how to write new code
 - [ ] Stop a sign in from removing what tv search you were looking at
+- [ ] If in search input allow "Enter" key to set off search
 - [ ] Ability to sort watchList and returned TV shows
 - [x] Ability to change pages, from returned TV shows
 - [ ] Ability to change pages with number selection
