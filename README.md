@@ -9,21 +9,23 @@ This project can be found running on GH pages via [MovieDB](https://trojincat.gi
 ---
 
 ```
-|-- public                  static files to be deployed (in version control)
+|-- public                      static files to be deployed (in version control)
 |-- src
-    |-- api                 interface for all API calls to TMDb
-    |-- components          React components
-    |-- constants           constants
-    |-- containers          "smart" React components
-    |-- helper              Holds reusable functions
-    |-- navigation          contains reactRouter
-    |-- state               contains Redux state
-    |-- styles              contains css
-    |-- .eslintrc           contains eslintrc rules
-    |-- app.js              root React component
-    |-- app.test.js         contains setup for app js tests
-    |-- index.js            app entry point
-    |-- setupTests.js       setup for tests
+    |-- api                     interface for all API calls to TMDb
+    |-- components              React components
+        |-- __snapshots__       Holds the snapshots
+    |-- constants               constants
+        |-- __snapshots__       Holds the snapshots
+    |-- containers              "smart" React components
+    |-- helper                  Holds reusable functions
+    |-- navigation              contains reactRouter
+    |-- state                   contains Redux state
+    |-- styles                  contains css
+    |-- .eslintrc               contains eslintrc rules
+    |-- app.js                  root React component
+    |-- app.test.js             Snapshot test for App.js
+    |-- index.js                app entry point
+    |-- setupTests.js           setup for tests
 
 ```
 
@@ -48,6 +50,10 @@ You will need Node and NPM installed
 8. The server should be on port `http://localhost:3000/`, go to a browser and enter that in
 9. Sign into the site with your username and password
 
+#### To Run snapshots
+1. yarn test
+2. Then press A
+
 ## Writing new code
 
 Inline exports of functions
@@ -65,8 +71,8 @@ Imports are to be
 - [x] Organise CSS into styles folder
 - [x] Fix year to only return year not entire date for tv list
 - [x] Fix floating point return on movie precentage
-- [ ] JEST Snapshot testing
-- [ ] Enzyme
+- [x] JEST Snapshots
+- [ ] Enzyme and testing
 - [ ] Clean up functions into helper file for reusable tools
 <<<<<<< HEAD
 - [ ] JEST & Enzyme
