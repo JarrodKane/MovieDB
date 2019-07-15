@@ -11,12 +11,13 @@ This project can be found running on GH pages via [MovieDB](https://trojincat.gi
 ```
 |-- public                      static files to be deployed (in version control)
 |-- src
+    |-- __snapshots__           App.js snapshots
     |-- api                     interface for all API calls to TMDb
     |-- components              React components
-        |-- __snapshots__       Holds the snapshots
+        |-- __snapshots__       Holds the component snapshots
     |-- constants               constants
-        |-- __snapshots__       Holds the snapshots
     |-- containers              "smart" React components
+        |-- __snapshots__       Holds the container snapshots
     |-- helper                  Holds reusable functions
     |-- navigation              contains reactRouter
     |-- state                   contains Redux state
@@ -51,6 +52,7 @@ You will need Node and NPM installed
 9. Sign into the site with your username and password
 
 #### To Run snapshots
+
 1. yarn test
 2. Then press A
 
@@ -74,18 +76,16 @@ Imports are to be
 - [x] JEST Snapshots
 - [ ] Enzyme and testing
 - [ ] Clean up functions into helper file for reusable tools
-<<<<<<< HEAD
+      <<<<<<< HEAD
 - [ ] JEST & Enzyme
 - [ ] Clean up unused functions
-- [ ] Add in guideline on how to write new code
-=======
->>>>>>> a28ec5a5289dbf084e2dc7765abdd5f043a7468d
+- [ ] # Add in guideline on how to write new code
+  > > > > > > > a28ec5a5289dbf084e2dc7765abdd5f043a7468d
 - [ ] Stop a sign in from removing what tv search you were looking at
 - [ ] Ability to sort watchList and returned TV shows
 - [ ] Ability to change pages, from returned TV shows
 - [ ] CSS theme
 - [ ] For language display have it show "English" not just "En"
-
 
 ## Built With
 
@@ -93,10 +93,10 @@ Imports are to be
 - [Semantic-UI](https://github.com/Semantic-Org/Semantic-UI-React)
 - [AXIOS](https://github.com/axios/axios)
 
+---
 
+---
 
-___
-___
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
