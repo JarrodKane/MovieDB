@@ -1,0 +1,10 @@
+.menuCent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navItem {
+  width: 10rem;
+  justify-content: center;
+}

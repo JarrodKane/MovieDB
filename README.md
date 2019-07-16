@@ -75,6 +75,7 @@ Imports are to be
 - [x] Fix floating point return on movie precentage
 - [x] JEST Snapshots
 - [ ] Enzyme testing
+- [ ] Deal with an expired session_id
 - [x] Fix LoginBar
 - [x] Mobile login css fix
 - [ ] Clean up functions into helper file for reusable tools

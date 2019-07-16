@@ -1,18 +1,29 @@
 import React from "react";
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
+
 import Home from "../containers/Home";
 import WatchList from "../containers/WatchList";
+import "../styles/Menu.css";
 
 function AppRouter() {
   return (
     <Router basename="/MovieDB">
-      <div>
-        <nav className="ui  pointing secondary menu container ">
-          <NavLink className=" item" exact to="/" activeClassName="active">
+      <div className="">
+        <nav className="ui  pointing secondary huge menu container menuCent">
+          <NavLink
+            className="navItem item"
+            exact
+            to="/"
+            activeClassName="active"
+          >
             Home
           </NavLink>
 
-          <NavLink className=" item" to="/watch_list/" activeClassName="active">
+          <NavLink
+            className="navItem item"
+            to="/watch_list/"
+            activeClassName="active"
+          >
             Watch List
           </NavLink>
         </nav>
