@@ -1,5 +1,5 @@
 import React from "react";
-import { Popup } from "semantic-ui-react";
+//import { Popup } from "semantic-ui-react";
 
 const SearchBar = props => {
   const {
@@ -19,12 +19,15 @@ const SearchBar = props => {
 
   let errorMesg;
   if (errorData === true) {
-    errorMesg = (
+    errorMesg = (<div>Erros</div>
+      //TODO: CHANGE FROM SEMANTIC USE
+      /*
       <Popup
         trigger={<div icon="add" />}
         open={true}
         content="Fill in username or password"
       />
+      */
     );
   } else {
     errorMesg = "";
@@ -62,8 +65,8 @@ const SearchBar = props => {
           </button>
         </div>
       ) : (
-        <div className="right item "></div>
-      )}
+          <div className="right item "></div>
+        )}
 
       <div className="Username ui stackable menu">
         {errorMesg}

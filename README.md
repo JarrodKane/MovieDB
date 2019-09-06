@@ -41,12 +41,16 @@ You will need Node and NPM installed
 3. Clone this repo `git clone https://github.com/TrojinCat/MovieDB.git`
 4. Move into MovieDB directory
 5. Run `npm install`
-6. Semantic-UI will ask a few questions
-   1. Enter
-   2. Enter
-   3. Yes
-   4. Enter
-   5. Enter
+
+REMOVED SEMANTIC-UI
+
+6. ~~Semantic-UI will ask a few questions~~
+   ~~1. Enter~~
+   ~~2. Enter~~
+   ~~3. Yes~~
+   ~~4. Enter~~
+   ~~5. Enter~~
+
 7. To start the project run `npm start`
 8. The server should be on port `http://localhost:3000/`, go to a browser and enter that in
 9. Sign into the site with your username and password
@@ -74,6 +78,11 @@ Imports are to be
 - [x] Fix year to only return year not entire date for tv list
 - [x] Fix floating point return on movie precentage
 - [x] JEST Snapshots
+- [ ] CSS theme
+- [ ] Change across to Netlify
+- [x] Change Semantic-UI to use CDN
+- [ ] TV view page
+- [ ] Responsive mobile css
 - [ ] Enzyme testing
 - [ ] Deal with an expired session_id
 - [x] Fix LoginBar
@@ -85,14 +94,13 @@ Imports are to be
 - [ ] Ability to sort watchList and returned TV shows
 - [x] Ability to change pages, from returned TV shows
 - [ ] Ability to change pages with number selection
-- [ ] CSS theme
-- [ ] Responsive mobile css
+
 - [ ] For language display have it show "English" not just "En"
 
 ## Built With
 
 - [Create React App](https://github.com/facebook/create-react-app)
-- [Semantic-UI](https://github.com/Semantic-Org/Semantic-UI-React)
+  ~~[Semantic-UI](https://github.com/Semantic-Org/Semantic-UI-React)~~
 - [AXIOS](https://github.com/axios/axios)
 
 ---

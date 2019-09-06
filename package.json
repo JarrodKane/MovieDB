@@ -16,9 +16,7 @@
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-mock-store": "^1.5.3",
-    "redux-thunk": "^2.3.0",
-    "semantic-ui-css": "^2.4.1",
-    "semantic-ui-react": "^0.87.2"
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "predeploy": "npm run build",
@@ -50,8 +48,7 @@
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-prettier": "^3.1.0",
     "gulp-util": "^3.0.8",
-    "prettier": "^1.18.2",
-    "semantic-ui": "^2.4.2"
+    "prettier": "^1.18.2"
   },
   "jest": {
     "snapshotSerializers": [
