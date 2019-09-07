@@ -57,7 +57,7 @@ export const setFields = (state = initialState, action = {}) => {
 
 const initialStateAuth = {
   isPending: true,
-  api: process.env.API_KEY,
+  api: process.env.REACT_APP_API_KEY,
   error: "",
   data: []
 };

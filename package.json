@@ -23,6 +23,7 @@
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "netfily": "./scripts/create-env.js | react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
