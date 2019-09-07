@@ -4,7 +4,9 @@ React based movie db using redux, and pulling from The MovieDB(TMDb).
 This allows you to sign in with your TMDb user, and search through TV shows, you can also add/remove these shows to a watchlist.
 You can manage your watchlist from a watchlist page once singed in.
 
-This project can be found running on GH pages via [MovieDB](https://trojincat.github.io/MovieDB/)
+This project can be found running on Netlify via [MovieDB](https://festive-roentgen-92c8e3.netlify.com/)
+Here's a link to the MovieDB if you wish to [sign up](https://www.themoviedb.org/?language=en-US)
+
 
 ---
 
@@ -43,17 +45,16 @@ You will need Node and NPM installed
 5. Run `npm install`
 
 REMOVED SEMANTIC-UI
-
-6. ~~Semantic-UI will ask a few questions~~
+~~Semantic-UI will ask a few questions~~
    ~~1. Enter~~
    ~~2. Enter~~
    ~~3. Yes~~
    ~~4. Enter~~
    ~~5. Enter~~
 
-7. To start the project run `npm start`
-8. The server should be on port `http://localhost:3000/`, go to a browser and enter that in
-9. Sign into the site with your username and password
+6. To start the project run `npm start`
+7. The server should be on port `http://localhost:3000/`, go to a browser and enter that in
+8. Sign into the site with your username and password
 
 #### To Run snapshots
 
@@ -78,10 +79,10 @@ Imports are to be
 - [x] Fix year to only return year not entire date for tv list
 - [x] Fix floating point return on movie precentage
 - [x] JEST Snapshots
-- [ ] CSS theme
-- [ ] Change across to Netlify
-- [x] Change Semantic-UI to use CDN
 - [ ] TV view page
+- [ ] CSS theme
+- [x] Change across to Netlify
+- [x] Change Semantic-UI to use CDN
 - [ ] Responsive mobile css
 - [ ] Enzyme testing
 - [ ] Deal with an expired session_id
@@ -94,7 +95,6 @@ Imports are to be
 - [ ] Ability to sort watchList and returned TV shows
 - [x] Ability to change pages, from returned TV shows
 - [ ] Ability to change pages with number selection
-
 - [ ] For language display have it show "English" not just "En"
 
 ## Built With
